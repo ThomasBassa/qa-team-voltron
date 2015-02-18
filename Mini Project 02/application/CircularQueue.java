@@ -4,15 +4,17 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-/**
- * @author
- * 
- */
+
 public class CircularQueue<E> implements FixedSizeQueueInterface<E> {
+
 	private int capacity;
+
 	private E dataArray[];
+
 	private int head;
+
 	private int tail;
+
 	private int size;
 
 	/**
@@ -25,11 +27,8 @@ public class CircularQueue<E> implements FixedSizeQueueInterface<E> {
 	public CircularQueue(int maxQueueSize) throws Exception {
 		super();
 		//if (maxQueueSize!=0)
-		if (maxQueueSize<=0)
-		{
-			throw new Exception("Queue capacity invalid.");
-		}
-//		this.capacity = maxQueueSize+1;
+		if(maxQueueSize <= 0) { throw new Exception("Queue capacity invalid."); }
+		//this.capacity = maxQueueSize+1;
 		this.capacity = maxQueueSize;
 		clear();
 	}
@@ -41,7 +40,7 @@ public class CircularQueue<E> implements FixedSizeQueueInterface<E> {
 
 	@Override
 	public E element() {
-		if (size == 0) {
+		if(size == 0) {
 			throw new NoSuchElementException("Circular queue is empty.");
 		} else {
 			//return dataArray[tail-1];
@@ -53,20 +52,20 @@ public class CircularQueue<E> implements FixedSizeQueueInterface<E> {
 	public boolean offer(E arg0) {
 		boolean retVal = false;
 		//if (this.size < this.capacity) {
-			//this.dataArray[head+1] = arg0;
-			//head = (head) % capacity;
-			
-			this.dataArray[tail] = arg0;
-			tail = (tail + 1) % capacity;
-			this.size++;
-			retVal = true;
+		//this.dataArray[head+1] = arg0;
+		//head = (head) % capacity;
+
+		this.dataArray[tail] = arg0;
+		tail = (tail + 1) % capacity;
+		this.size++;
+		retVal = true;
 		//}
 		return retVal;
 	}
 
 	@Override
 	public E peek() {
-		if (size == 0) {
+		if(size == 0) {
 			return null;
 		} else {
 			//return dataArray[tail-1];
@@ -77,12 +76,12 @@ public class CircularQueue<E> implements FixedSizeQueueInterface<E> {
 	@Override
 	public E poll() {
 		E retVal = null;
-		if (size == 0) {
-			// DO nothing.
+		if(size == 0) {
+			//Do nothing.
 		} else {
-//			retVal = dataArray[tail-1];
-//			dataArray[tail-1] = null;
-			
+			//retVal = dataArray[tail-1];
+			//dataArray[tail-1] = null;
+
 			retVal = dataArray[head];
 			dataArray[head] = null;
 			head = (head + 1) % capacity;
@@ -94,18 +93,18 @@ public class CircularQueue<E> implements FixedSizeQueueInterface<E> {
 
 	@Override
 	public E remove() {
-		if (size == 0) {
+		if(size == 0) {
 			throw new NoSuchElementException("Circular queue is empty.");
 		} else {
-//			E retVal = dataArray[tail-1];
-//			dataArray[tail-1] = null;
-//			tail = (tail) % capacity;
-			
+			//E retVal = dataArray[tail-1];
+			//dataArray[tail-1] = null;
+			//tail = (tail) % capacity;
+
 			E retVal = dataArray[head];
 			dataArray[head] = null;
-			head = (head+1) % capacity;
+			head = (head + 1) % capacity;
 			size--;
-			
+
 			return retVal;
 		}
 	}
@@ -136,13 +135,13 @@ public class CircularQueue<E> implements FixedSizeQueueInterface<E> {
 
 	@Override
 	public boolean isEmpty() {
-//		if (this.size != 0) {
-//			return true;
-//		} else {
-//			return false;
-//		}
-		
-		if (this.size == 0) {
+		//if (this.size != 0) {
+		//	return true;
+		//} else {
+		//	return false;
+		//}
+
+		if(this.size == 0) {
 			return true;
 		} else {
 			return false;
@@ -178,7 +177,7 @@ public class CircularQueue<E> implements FixedSizeQueueInterface<E> {
 	public Object[] toArray() {
 		Object retVal[] = new Object[size];
 
-		for (int index = 0; index < size; index++) {
+		for(int index = 0; index < size; index++) {
 			int myOffset = (head + index) % this.capacity;
 			retVal[index] = this.dataArray[myOffset];
 		}
@@ -204,5 +203,4 @@ public class CircularQueue<E> implements FixedSizeQueueInterface<E> {
 	public boolean isQueueFull() {
 		return (this.size >= this.capacity);
 	}
-
 }
