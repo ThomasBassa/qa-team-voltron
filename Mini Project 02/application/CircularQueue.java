@@ -4,17 +4,21 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-
 public class CircularQueue<E> implements FixedSizeQueueInterface<E> {
 
+	/** The maximum number of elements this CircularQueue may hold. */
 	private int capacity;
 
+	/** The internal array used to store the elements. */
 	private E dataArray[];
 
+	/** "Pointer" to the front of the queue */
 	private int head;
 
+	/** "Pointer" to the back of the queue */
 	private int tail;
 
+	/** The number of elements currently stored by this CircularQueue */
 	private int size;
 
 	/**
@@ -22,13 +26,13 @@ public class CircularQueue<E> implements FixedSizeQueueInterface<E> {
 	 * as an attribute.
 	 * 
 	 * @param maxQueueSize This is the capacity of the circular queue.
-	 * @throws Exception An exception will be thrown if an invalid capacity is passed into the method.
+	 * @throws IllegalArgumentException An exception will be thrown if an invalid capacity is passed into the method.
 	 */
-	public CircularQueue(int maxQueueSize) throws Exception {
-		super();
+	public CircularQueue(int maxQueueSize) {
 		//if (maxQueueSize!=0)
-		if(maxQueueSize <= 0) { throw new Exception("Queue capacity invalid."); }
-		//this.capacity = maxQueueSize+1;
+		if(maxQueueSize <= 0) {
+			throw new IllegalArgumentException("Queue capacity must be greater than zero.");
+		}
 		this.capacity = maxQueueSize;
 		clear();
 	}
@@ -49,13 +53,13 @@ public class CircularQueue<E> implements FixedSizeQueueInterface<E> {
 	}
 
 	@Override
-	public boolean offer(E arg0) {
+	public boolean offer(E element) {
 		boolean retVal = false;
 		//if (this.size < this.capacity) {
 		//this.dataArray[head+1] = arg0;
 		//head = (head) % capacity;
 
-		this.dataArray[tail] = arg0;
+		this.dataArray[tail] = element;
 		tail = (tail + 1) % capacity;
 		this.size++;
 		retVal = true;
@@ -140,12 +144,7 @@ public class CircularQueue<E> implements FixedSizeQueueInterface<E> {
 		//} else {
 		//	return false;
 		//}
-
-		if(this.size == 0) {
-			return true;
-		} else {
-			return false;
-		}
+		return this.size == 0;
 	}
 
 	@Override
