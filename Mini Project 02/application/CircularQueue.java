@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+
 public class CircularQueue<E> implements FixedSizeQueueInterface<E> {
 
 	/** The maximum number of elements this CircularQueue may hold. */
@@ -37,19 +38,10 @@ public class CircularQueue<E> implements FixedSizeQueueInterface<E> {
 		clear();
 	}
 
+	//Methods implemented from Queue
 	@Override
 	public boolean add(E arg0) {
 		return offer(arg0);
-	}
-
-	@Override
-	public E element() {
-		if(size == 0) {
-			throw new NoSuchElementException("Circular queue is empty.");
-		} else {
-			//return dataArray[tail-1];
-			return dataArray[head];
-		}
 	}
 
 	@Override
@@ -68,12 +60,20 @@ public class CircularQueue<E> implements FixedSizeQueueInterface<E> {
 	}
 
 	@Override
-	public E peek() {
+	public E remove() {
 		if(size == 0) {
-			return null;
+			throw new NoSuchElementException("Circular queue is empty.");
 		} else {
-			//return dataArray[tail-1];
-			return dataArray[head];
+			//E retVal = dataArray[tail-1];
+			//dataArray[tail-1] = null;
+			//tail = (tail) % capacity;
+
+			E retVal = dataArray[head];
+			dataArray[head] = null;
+			head = (head + 1) % capacity;
+			size--;
+
+			return retVal;
 		}
 	}
 
@@ -96,28 +96,26 @@ public class CircularQueue<E> implements FixedSizeQueueInterface<E> {
 	}
 
 	@Override
-	public E remove() {
+	public E element() {
 		if(size == 0) {
 			throw new NoSuchElementException("Circular queue is empty.");
 		} else {
-			//E retVal = dataArray[tail-1];
-			//dataArray[tail-1] = null;
-			//tail = (tail) % capacity;
-
-			E retVal = dataArray[head];
-			dataArray[head] = null;
-			head = (head + 1) % capacity;
-			size--;
-
-			return retVal;
+			//return dataArray[tail-1];
+			return dataArray[head];
 		}
 	}
 
 	@Override
-	public boolean addAll(Collection<? extends E> arg0) {
-		throw new UnsupportedOperationException("Method not yet supported.");
+	public E peek() {
+		if(size == 0) {
+			return null;
+		} else {
+			//return dataArray[tail-1];
+			return dataArray[head];
+		}
 	}
 
+	//Methods implemented from Collection
 	@SuppressWarnings("unchecked")
 	@Override
 	public void clear() {
@@ -128,16 +126,6 @@ public class CircularQueue<E> implements FixedSizeQueueInterface<E> {
 	}
 
 	@Override
-	public boolean contains(Object arg0) {
-		throw new UnsupportedOperationException("Method not yet supported.");
-	}
-
-	@Override
-	public boolean containsAll(Collection<?> arg0) {
-		throw new UnsupportedOperationException("Method not yet supported.");
-	}
-
-	@Override
 	public boolean isEmpty() {
 		//if (this.size != 0) {
 		//	return true;
@@ -145,26 +133,6 @@ public class CircularQueue<E> implements FixedSizeQueueInterface<E> {
 		//	return false;
 		//}
 		return this.size == 0;
-	}
-
-	@Override
-	public Iterator<E> iterator() {
-		throw new UnsupportedOperationException("Method not yet supported.");
-	}
-
-	@Override
-	public boolean remove(Object arg0) {
-		throw new UnsupportedOperationException("Method not yet supported.");
-	}
-
-	@Override
-	public boolean removeAll(Collection<?> arg0) {
-		throw new UnsupportedOperationException("Method not yet supported.");
-	}
-
-	@Override
-	public boolean retainAll(Collection<?> arg0) {
-		throw new UnsupportedOperationException("Method not yet supported.");
 	}
 
 	@Override
@@ -188,6 +156,7 @@ public class CircularQueue<E> implements FixedSizeQueueInterface<E> {
 		throw new UnsupportedOperationException("Method not yet supported.");
 	}
 
+	//Methods implemented from FixedSizeQueueInterface
 	@Override
 	public int getQueueCapacity() {
 		return this.capacity;
@@ -201,5 +170,42 @@ public class CircularQueue<E> implements FixedSizeQueueInterface<E> {
 	@Override
 	public boolean isQueueFull() {
 		return (this.size >= this.capacity);
+	}
+
+	//The following methods from Collection were given unimplemented,
+	//and are NOT to be implemented or tested as part of Mini-Project 2
+	@Override
+	public boolean addAll(Collection<? extends E> arg0) {
+		throw new UnsupportedOperationException("Method not yet supported.");
+	}
+
+	@Override
+	public Iterator<E> iterator() {
+		throw new UnsupportedOperationException("Method not yet supported.");
+	}
+
+	@Override
+	public boolean remove(Object arg0) {
+		throw new UnsupportedOperationException("Method not yet supported.");
+	}
+
+	@Override
+	public boolean removeAll(Collection<?> arg0) {
+		throw new UnsupportedOperationException("Method not yet supported.");
+	}
+
+	@Override
+	public boolean retainAll(Collection<?> arg0) {
+		throw new UnsupportedOperationException("Method not yet supported.");
+	}
+
+	@Override
+	public boolean contains(Object arg0) {
+		throw new UnsupportedOperationException("Method not yet supported.");
+	}
+
+	@Override
+	public boolean containsAll(Collection<?> arg0) {
+		throw new UnsupportedOperationException("Method not yet supported.");
 	}
 }

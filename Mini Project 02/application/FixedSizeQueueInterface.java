@@ -13,6 +13,10 @@ public interface FixedSizeQueueInterface<E> extends Queue<E> {
 	 * E peek() //Returns front item or null when empty
 	 */
 	
+	/* Methods inherited from Collection<E>
+	 * TODO note methods from Collection
+	 */
+	
 	/**
 	 * This method will obtain the maximum size for the queue, namely the number
 	 * of elements that can be held on the queue without it overflowing.
