@@ -151,11 +151,6 @@ public class CircularQueue<E> implements FixedSizeQueueInterface<E> {
 		return retVal;
 	}
 
-	@Override
-	public <T> T[] toArray(T[] arg0) {
-		throw new UnsupportedOperationException("Method not yet supported.");
-	}
-
 	//Methods implemented from FixedSizeQueueInterface
 	@Override
 	public int getQueueCapacity() {
@@ -206,6 +201,11 @@ public class CircularQueue<E> implements FixedSizeQueueInterface<E> {
 
 	@Override
 	public boolean containsAll(Collection<?> arg0) {
+		throw new UnsupportedOperationException("Method not yet supported.");
+	}
+	
+	@Override
+	public <T> T[] toArray(T[] arg0) {
 		throw new UnsupportedOperationException("Method not yet supported.");
 	}
 }
