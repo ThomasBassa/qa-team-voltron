@@ -48,8 +48,6 @@ public class CircularQueueTest {
 		} catch (IllegalArgumentException e) {
 			//Pass
 		}
-
-
 	}
 
 	/** Test the add method.
@@ -58,18 +56,37 @@ public class CircularQueueTest {
 	 * <li>Cause the queue to not be empty</li>
 	 * <li>Reduce the number of elements remaining by one if queue not full</li>
 	 * <li>Return true, or throw IllegalStateException if full</li>
-	 * </ul> */
+	 * </ul> 
+	 * @author Thomas */
 	@Test
 	public void testAdd() {
-		//TODO testAdd involves remove?
-		//TODO what happens when you add too many elements?
-		size3InitQueue.add(0);
-		size3InitQueue.add(1);
-		size3InitQueue.add(2);
-		size3InitQueue.add(3);
-		assertEquals(3, size3InitQueue.remove(), 0);
-		assertEquals(1, size3InitQueue.remove(), 0);
-		assertEquals(2, size3InitQueue.remove(), 0);
+		//Save initial remaining space for -1 check, add, check not empty
+		int initRemaining = size3InitQueue.getRemainingQueueSpace();
+		assertTrue(size3InitQueue.add(0));
+		assertFalse(size3InitQueue.isEmpty());
+		
+		//-1 check, cycle variables around for one more -1 check
+		int curRemaining = size3InitQueue.getRemainingQueueSpace();
+		assertEquals(initRemaining - 1, curRemaining);
+		initRemaining = curRemaining;
+		
+		//Second addition is checked for not empty, -1 conditions
+		assertTrue(size3InitQueue.add(1));
+		assertFalse(size3InitQueue.isEmpty());
+		curRemaining = size3InitQueue.getRemainingQueueSpace();
+		assertEquals(initRemaining - 1, curRemaining);
+	
+		//Third addition is just checked for not empty
+		assertTrue(size3InitQueue.add(2));
+		assertFalse(size3InitQueue.isEmpty());
+		try {
+			size3InitQueue.add(3);
+			fail("Expected exception when using add on full queue");
+		} catch (IllegalStateException e) {
+			//Pass throw test.
+			//May as well check whether full here...
+			assertTrue(size3InitQueue.isQueueFull());
+		}	
 	}
 
 	/** Test the offer method.
@@ -94,6 +111,7 @@ public class CircularQueueTest {
 	/** Test the remove method.
 	 * It should...
 	 * <ul>
+	 * <li>Cause the queue to not be full</li>
 	 * <li>Return the next element in FIFO order
 	 * (and not return the same thing twice if added elements are distinct)</li>
 	 * <li>Increase the number of elements remaining by one if queue not empty</li>
@@ -118,6 +136,7 @@ public class CircularQueueTest {
 	/** Test the poll method.
 	 * It should...
 	 * <ul>
+	 * <li>Cause the queue to not be full</li>
 	 * <li>Return the next element in FIFO order
 	 * (and not return the same thing twice if added elements are distinct)</li>
 	 * <li>Increase the number of elements remaining by one if queue not empty</li>
@@ -179,7 +198,7 @@ public class CircularQueueTest {
 	public void testClear() {
 		//TODO implement testClear
 		size3InitQueue.clear();
-		fail("Test for Is Clear is not implemented yet");
+		fail("Test for clear is not implemented yet");
 	}
 
 	/** Test the isEmpty method.
