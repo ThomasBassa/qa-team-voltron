@@ -4,7 +4,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-
+/** A fixed size queue that utilizes an array and a set of
+ * rotating "pointers" to maintain its data. */
 public class CircularQueue<E> implements FixedSizeQueueInterface<E> {
 
 	/** The maximum number of elements this CircularQueue may hold. */
