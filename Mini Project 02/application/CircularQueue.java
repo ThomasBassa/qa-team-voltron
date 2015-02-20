@@ -43,8 +43,10 @@ public class CircularQueue<E> implements FixedSizeQueueInterface<E> {
 
 	//Methods implemented from Queue
 	@Override
-	public boolean add(E arg0) {
-		return offer(arg0);
+	public boolean add(E addition) {
+		boolean offered = offer(addition);
+		if(!offered) throw new IllegalStateException("May not add to a full queue.");
+		else return true;
 	}
 
 	@Override
