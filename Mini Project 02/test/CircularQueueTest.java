@@ -196,9 +196,18 @@ public class CircularQueueTest {
 	 * </ul> */
 	@Test
 	public void testClear() {
-		//TODO implement testClear
+		size3InitQueue.add(1);
+		size3InitQueue.add(2);
+		size3InitQueue.add(3);
+		assertFalse(size3InitQueue.isEmpty());
+		
 		size3InitQueue.clear();
-		fail("Test for clear is not implemented yet");
+		assertTrue(size3InitQueue.isEmpty());
+		assertEquals(size3InitQueue.getQueueCapacity(), size3InitQueue.getRemainingQueueSpace());
+		//Poll multiple times to attempt to get later additions
+		assertNull(size3InitQueue.poll());
+		assertNull(size3InitQueue.poll());
+		assertNull(size3InitQueue.poll());
 	}
 
 	/** Test the isEmpty method.
