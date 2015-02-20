@@ -95,9 +95,11 @@ public class CircularQueue<E> implements FixedSizeQueueInterface<E> {
 	@Override
 	public E poll() {
 		E retVal = null;
-		if(size == 0) {
-			//Do nothing.
-		} else {
+		//if(size == 0) {
+		//	//Do nothing.
+		//} else {
+		//Minor refactor of the above
+		if(size > 0) {
 /***************************************ERROR IN FOLLOWING CODE********************************************************/
 			//retVal = dataArray[tail-1];
 			//dataArray[tail-1] = null;
