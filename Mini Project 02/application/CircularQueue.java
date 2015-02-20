@@ -31,7 +31,9 @@ public class CircularQueue<E> implements FixedSizeQueueInterface<E> {
 	 * @throws IllegalArgumentException An exception will be thrown if an invalid capacity is passed into the method.
 	 */
 	public CircularQueue(int maxQueueSize) {
+/***************************************ERROR IN FOLLOWING CODE********************************************************/
 		//if (maxQueueSize!=0)
+/*************************************************************************************************************************/
 		if(maxQueueSize <= 0) {
 			throw new IllegalArgumentException("Queue capacity must be greater than zero.");
 		}
@@ -48,13 +50,18 @@ public class CircularQueue<E> implements FixedSizeQueueInterface<E> {
 	@Override
 	public boolean offer(E element) {
 		boolean retVal = false;
+
+/***************************************ERROR IN FOLLOWING CODE********************************************************/
 		//if (this.size < this.capacity) {
 		//this.dataArray[head+1] = arg0;
 		//head = (head) % capacity;
+/*************************************************************************************************************************/
 
+/****************************************FIX WAS TO UPDATE TAIL RATHER THAN HEAD**************************************/
 		this.dataArray[tail] = element;
 		tail = (tail + 1) % capacity;
 		this.size++;
+/***************************************************************************************************************************/
 		retVal = true;
 		//}
 		return retVal;
@@ -65,13 +72,18 @@ public class CircularQueue<E> implements FixedSizeQueueInterface<E> {
 		if(size == 0) {
 			throw new NoSuchElementException("Circular queue is empty.");
 		} else {
+
+/***************************************ERROR IN FOLLOWING CODE********************************************************/
 			//E retVal = dataArray[tail-1];
 			//dataArray[tail-1] = null;
 			//tail = (tail) % capacity;
+/*************************************************************************************************************************/
 
+/****************************************FIX WAS TO UPDATE THE HEAD RATHER THAN TAIL**************************************/
 			E retVal = dataArray[head];
 			dataArray[head] = null;
 			head = (head + 1) % capacity;
+/***************************************************************************************************************************/
 			size--;
 
 			return retVal;
@@ -84,11 +96,15 @@ public class CircularQueue<E> implements FixedSizeQueueInterface<E> {
 		if(size == 0) {
 			//Do nothing.
 		} else {
+/***************************************ERROR IN FOLLOWING CODE********************************************************/
 			//retVal = dataArray[tail-1];
 			//dataArray[tail-1] = null;
+/*************************************************************************************************************************/
 
+/****************************************FIX WAS TO UPDATE THE HEAD RATHER THAN TAIL**************************************/
 			retVal = dataArray[head];
 			dataArray[head] = null;
+/***************************************************************************************************************************/
 			head = (head + 1) % capacity;
 			size--;
 		}
@@ -101,8 +117,13 @@ public class CircularQueue<E> implements FixedSizeQueueInterface<E> {
 		if(size == 0) {
 			throw new NoSuchElementException("Circular queue is empty.");
 		} else {
+/***************************************ERROR IN FOLLOWING CODE********************************************************/
 			//return dataArray[tail-1];
+/*************************************************************************************************************************/
+
+/****************************************FIX WAS TO UPDATE THE HEAD RATHER THAN TAIL**************************************/
 			return dataArray[head];
+/*************************************************************************************************************************/
 		}
 	}
 
@@ -111,8 +132,13 @@ public class CircularQueue<E> implements FixedSizeQueueInterface<E> {
 		if(size == 0) {
 			return null;
 		} else {
+/***************************************ERROR IN FOLLOWING CODE********************************************************/
 			//return dataArray[tail-1];
+/*************************************************************************************************************************/
+			
+/****************************************FIX WAS TO RETURN THE HEAD RATHER THAN TAIL**************************************/
 			return dataArray[head];
+/*************************************************************************************************************************/
 		}
 	}
 
@@ -128,12 +154,17 @@ public class CircularQueue<E> implements FixedSizeQueueInterface<E> {
 
 	@Override
 	public boolean isEmpty() {
+/***************************************ERROR IN FOLLOWING CODE********************************************************/
 		//if (this.size != 0) {
 		//	return true;
 		//} else {
 		//	return false;
 		//}
+/*************************************************************************************************************************/
+
+/****************************************FIX WAS TO RETURN COMPARRISON OF SIZE VS 0**************************************/
 		return this.size == 0;
+/*************************************************************************************************************************/
 	}
 
 	@Override
