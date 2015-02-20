@@ -95,7 +95,8 @@ public class CircularQueueTest {
 	 * <li>Cause the queue to not be empty</li>
 	 * <li>Reduce the number of elements remaining by one if queue not full</li>
 	 * <li>Return true, or false if queue is full</li>
-	 * </ul> */
+	 * </ul> 
+	 * @author Greg*/
 	@Test
 	public void testOffer() {
 	//Offer one element to queue check if size increased by 1, remaining size decreased by 1
@@ -145,44 +146,45 @@ public class CircularQueueTest {
 	 * (and not return the same thing twice if added elements are distinct)</li>
 	 * <li>Increase the number of elements remaining by one if queue not empty</li>
 	 * <li>Throw NoSuchElementException if queue is empty</li>
-	 * </ul> */
+	 * </ul> 
+	 * @author Greg */
 	@Test
 	public void testRemove() {
-	//Try to remove from empty queue
-	//Expected outcome is an exception to be thrown
-	try {
-		size3InitQueue.remove();
-		fail("Removed an element from queue when queue was empty");
-	} catch (Exception e) {
-		//pass
-	}
-	
-	//Add elements to queue
-	size3InitQueue.add(0);
-	size3InitQueue.add(1);
-	size3InitQueue.add(2);
-	
-	//Check initial size
-	assertEquals(3, size3InitQueue.size(), 0);
-	assertEquals(0, size3InitQueue.getRemainingQueueSpace(), 0);
-	
-	//remove an element. check if it was the element inserted first
-	//check if the size was decreased, and the remaining space was increased
-	assertEquals(0, size3InitQueue.remove(), 0);
-	assertEquals(2, size3InitQueue.size(), 0);
-	assertEquals(1, size3InitQueue.getRemainingQueueSpace(), 0);
-	
-	//remove an element. check if it was the element inserted first
-	//check if the size was decreased, and the remaining space was increased
-	assertEquals(1, size3InitQueue.remove(), 0);
-	assertEquals(1, size3InitQueue.size(), 0);
-	assertEquals(2, size3InitQueue.getRemainingQueueSpace(), 0);
-	
-	//remove an element. check if it was the element inserted first
-	//check if the size was decreased, and the remaining space was increased
-	assertEquals(2, size3InitQueue.remove(), 0);
-	assertEquals(0, size3InitQueue.size(), 0);
-	assertEquals(3, size3InitQueue.getRemainingQueueSpace(), 0);
+		//Try to remove from empty queue
+		//Expected outcome is an exception to be thrown
+		try {
+			size3InitQueue.remove();
+			fail("Removed an element from queue when queue was empty");
+		} catch (Exception e) {
+			//pass
+		}
+		
+		//Add elements to queue
+		size3InitQueue.add(0);
+		size3InitQueue.add(1);
+		size3InitQueue.add(2);
+		
+		//Check initial size
+		assertEquals(3, size3InitQueue.size(), 0);
+		assertEquals(0, size3InitQueue.getRemainingQueueSpace(), 0);
+		
+		//remove an element. check if it was the element inserted first
+		//check if the size was decreased, and the remaining space was increased
+		assertEquals(0, size3InitQueue.remove(), 0);
+		assertEquals(2, size3InitQueue.size(), 0);
+		assertEquals(1, size3InitQueue.getRemainingQueueSpace(), 0);
+		
+		//remove an element. check if it was the element inserted first
+		//check if the size was decreased, and the remaining space was increased
+		assertEquals(1, size3InitQueue.remove(), 0);
+		assertEquals(1, size3InitQueue.size(), 0);
+		assertEquals(2, size3InitQueue.getRemainingQueueSpace(), 0);
+		
+		//remove an element. check if it was the element inserted first
+		//check if the size was decreased, and the remaining space was increased
+		assertEquals(2, size3InitQueue.remove(), 0);
+		assertEquals(0, size3InitQueue.size(), 0);
+		assertEquals(3, size3InitQueue.getRemainingQueueSpace(), 0);
 	}
 
 	/** Test the poll method.
@@ -193,7 +195,8 @@ public class CircularQueueTest {
 	 * (and not return the same thing twice if added elements are distinct)</li>
 	 * <li>Increase the number of elements remaining by one if queue not empty</li>
 	 * <li>Return null if queue is empty</li>
-	 * </ul> */
+	 * </ul>
+	 * @author Greg */
 	@Test
 	public void testPoll() {
 		//poll from empty queue
@@ -233,7 +236,8 @@ public class CircularQueueTest {
 	 * <li>Return the front element of the queue, repeatedly</li>
 	 * <li>Not change number of elements remaining</li>
 	 * <li>Throw NoSuchElementException if queue is empty</li>
-	 * </ul> */
+	 * </ul>
+	 * @author Greg */
 	@Test
 	public void testElement() {
 		//Try to use element on empty queue
@@ -278,7 +282,8 @@ public class CircularQueueTest {
 	 * <li>Return the front element of the queue, repeatedly</li>
 	 * <li>Not change number of elements remaining</li>
 	 * <li>Return null if queue is empty</li>
-	 * </ul> */
+	 * </ul> 
+	 * @author Greg */
 	@Test
 	public void testPeek() {
 		//peek on an empty queue
@@ -339,7 +344,8 @@ public class CircularQueueTest {
 	 * <li>Return true when the number of elements remaining equals capacity</li>
 	 * <li>Return false otherwise</li>
 	 * <li>Not return the same result as isFull</li>
-	 * </ul> */
+	 * </ul> 
+	 * @author Greg */
 	@Test
 	public void testIsEmpty() {
 		//check initial queue is empty
@@ -394,7 +400,8 @@ public class CircularQueueTest {
 	 * <li>Return increasing numbers when add/offer are used</li>
 	 * <li>Return decreasing numbers when remove/poll are used</li>
 	 * <li>Always return a value between 0 and capacity, inclusive</li>
-	 * </ul> Capacity - size - remaining elements == 0 */
+	 * </ul> Capacity - size - remaining elements == 0 
+	 * @author Greg */
 	@Test
 	public void testSize() {
 		//check initial size is 0 and queue is empty
@@ -477,7 +484,8 @@ public class CircularQueueTest {
 	 * <li>Return decreasing numbers when add/offer are used</li>
 	 * <li>Return increasing numbers when remove/poll are used</li>
 	 * <li>Always return a value between 0 and capacity, inclusive</li>
-	 * </ul> Capacity - size - remaining elements == 0 */
+	 * </ul> Capacity - size - remaining elements == 0 
+	 * @author Greg */
 	@Test
 	public void testGetRemainingQueueSpace() {
 		//add elements to queue, check the remaining space is decreasing by 1
@@ -522,7 +530,8 @@ public class CircularQueueTest {
 	 * <li>Return false when the number of elements remaining equals capacity</li>
 	 * <li>Return true otherwise (i.e. after enough add/offer)</li>
 	 * <li>Not return the same result as isEmpty</li>
-	 * </ul> */
+	 * </ul> 
+	 * @author Greg */
 	@Test
 	public void testIsQueueFull() {
 		//check if initial queue is full
