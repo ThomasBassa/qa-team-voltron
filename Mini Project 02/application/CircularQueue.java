@@ -52,20 +52,20 @@ public class CircularQueue<E> implements FixedSizeQueueInterface<E> {
 	@Override
 	public boolean offer(E element) {
 		boolean retVal = false;
-
+		if (this.size < this.capacity) {
+	
 /***************************************ERROR IN FOLLOWING CODE********************************************************/
-		//if (this.size < this.capacity) {
-		//this.dataArray[head+1] = arg0;
-		//head = (head) % capacity;
+			//this.dataArray[head+1] = arg0;
+			//head = (head) % capacity;
 /*************************************************************************************************************************/
 
 /****************************************FIX WAS TO UPDATE TAIL RATHER THAN HEAD**************************************/
-		this.dataArray[tail] = element;
-		tail = (tail + 1) % capacity;
-		this.size++;
+			this.dataArray[tail] = element;
+			tail = (tail + 1) % capacity;
 /***************************************************************************************************************************/
-		retVal = true;
-		//}
+			this.size++;
+			retVal = true;
+		}
 		return retVal;
 	}
 
