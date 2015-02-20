@@ -454,16 +454,21 @@ public class CircularQueueTest {
 	}
 
 	/** Test the toArray method.
-	 * This method should produce an array where
-	 * the size is equal to the number of utilized elements,
-	 * and the order is the same as would be obtained through repeated
-	 * use of remove/poll.
-	 * This array is independent of the one maintained by the queue
-	 * and altering its elements will not impact the queue. */
+	 * It should...
+	 * <ul>
+	 * <li>Should produce an array where the size is equal to the number of utilized elements,
+	 * and the order is the same as would be obtained through repeated use of remove/poll.</li>
+	 * <li>This array is independent of the one maintained by the queue and altering its elements will not impact the queue</li>
+	 * </ul>
+	 * @author uidris */
 	@Test
 	public void testToArray() {
+		
+		//add element to queue
 		size3InitQueue.add(0);
 		size3InitQueue.add(1);
+		
+		//produce array
 		assertEquals(0, (int) size3InitQueue.toArray()[0], 0);
 		assertEquals(1, (int) size3InitQueue.toArray()[1], 0);
 	}
