@@ -22,13 +22,16 @@ public class CircularQueueTest {
 		size3InitQueue = new CircularQueue<Integer>(3);
 	}
 
-	/** Ensure the circular queue constructor functions,
-	 * predominantly by testing various capacity values.
-	 * Positive values should succeed. Zero or negative values
-	 * should throw an exception. */
+	/** Test constructor
+	 * <ul>
+	 * <li>Ensure the circular queue constructor functions, predominantly by testing various capacity values.</li>
+	 * <li>Positive values should succeed. Zero or negative values should throw an exception.</li>
+	 * </ul>
+	 * @author uidris */
 	@Test
 	public void testCircularQueueConstructor() {
 		try {
+			//initialize with capacity of 3
 			size3InitQueue = new CircularQueue<Integer>(3);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -36,6 +39,7 @@ public class CircularQueueTest {
 		}
 
 		try {
+			//initialize with capacity of 0
 			size3InitQueue = new CircularQueue<Integer>(0);
 			fail("Circular queue created with 0 capacity");
 		} catch (IllegalArgumentException e) {
@@ -43,6 +47,7 @@ public class CircularQueueTest {
 		}
 
 		try {
+			//initialize with capacity of -1
 			size3InitQueue = new CircularQueue<Integer>(-1);
 			fail("Circular queue created with -1 capacity");
 		} catch (IllegalArgumentException e) {
@@ -320,16 +325,28 @@ public class CircularQueueTest {
 	 * <li>Remove all elements</li>
 	 * <li>Cause isEmpty to return true</li>
 	 * <li>Cause the number of elements remaining to equal capacity</li>
-	 * </ul> */
+	 * </ul> 
+	 * @author uidris*/
 	@Test
 	public void testClear() {
+		
+		//create queue
+		size3InitQueue = new CircularQueue<Integer>(3);
+		//add 3 items
 		size3InitQueue.add(1);
 		size3InitQueue.add(2);
 		size3InitQueue.add(3);
+		
+		//check is empty. should return false
 		assertFalse(size3InitQueue.isEmpty());
 		
+		//clear queue
 		size3InitQueue.clear();
+		
+		//check is empty. should return true
 		assertTrue(size3InitQueue.isEmpty());
+		
+		
 		assertEquals(size3InitQueue.getQueueCapacity(), size3InitQueue.getRemainingQueueSpace());
 		//Poll multiple times to attempt to get later additions
 		assertNull(size3InitQueue.poll());
@@ -474,13 +491,24 @@ public class CircularQueueTest {
 	}
 
 	/** Test the queue capacity method.
-	 * It should always return the same value as used by
-	 * the constructor, regardless of other queue operations. */
+	 * It should... 
+	 * <ui>
+	 * <li>Should always return the same value as used by the constructor, regardless of other queue operations.</li>
+	 * </ui>
+	 * @author uidris 
+	 * */
 	@Test
 	public void testGetQueueCapacity() {
+		
+		//create queue with capacity of 3
+		size3InitQueue = new CircularQueue<Integer>(3);
+		//get capacity
 		assertEquals(3, size3InitQueue.getQueueCapacity(), 0);
+		//add
 		size3InitQueue.add(0);
+		//get capacity
 		assertEquals(3, size3InitQueue.getQueueCapacity(), 0);
+		
 	}
 
 	/** Test the remaining space method.
