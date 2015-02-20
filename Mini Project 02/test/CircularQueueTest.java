@@ -148,18 +148,41 @@ public class CircularQueueTest {
 	 * </ul> */
 	@Test
 	public void testRemove() {
-		try {
-			size3InitQueue.remove();
-			//TODO maybe fail?
-		} catch (Exception e) {
-			//expected exception thrown
-		}
-		size3InitQueue.add(0);
-		assertEquals(0, size3InitQueue.remove(), 0);
-		size3InitQueue.add(1);
-		size3InitQueue.add(2);
-		size3InitQueue.add(3);
-		assertEquals(1, size3InitQueue.remove(), 0);
+	//Try to remove from empty queue
+	//Expected outcome is an exception to be thrown
+	try {
+		size3InitQueue.remove();
+		fail("Removed an element from queue when queue was empty");
+	} catch (Exception e) {
+		//pass
+	}
+	
+	//Add elements to queue
+	size3InitQueue.add(0);
+	size3InitQueue.add(1);
+	size3InitQueue.add(2);
+	
+	//Check initial size
+	assertEquals(3, size3InitQueue.size(), 0);
+	assertEquals(0, size3InitQueue.getRemainingQueueSpace(), 0);
+	
+	//remove an element. check if it was the element inserted first
+	//check if the size was decreased, and the remaining space was increased
+	assertEquals(0, size3InitQueue.remove(), 0);
+	assertEquals(2, size3InitQueue.size(), 0);
+	assertEquals(1, size3InitQueue.getRemainingQueueSpace(), 0);
+	
+	//remove an element. check if it was the element inserted first
+	//check if the size was decreased, and the remaining space was increased
+	assertEquals(1, size3InitQueue.remove(), 0);
+	assertEquals(1, size3InitQueue.size(), 0);
+	assertEquals(2, size3InitQueue.getRemainingQueueSpace(), 0);
+	
+	//remove an element. check if it was the element inserted first
+	//check if the size was decreased, and the remaining space was increased
+	assertEquals(2, size3InitQueue.remove(), 0);
+	assertEquals(0, size3InitQueue.size(), 0);
+	assertEquals(3, size3InitQueue.getRemainingQueueSpace(), 0);
 	}
 
 	/** Test the poll method.
@@ -173,10 +196,35 @@ public class CircularQueueTest {
 	 * </ul> */
 	@Test
 	public void testPoll() {
-		size3InitQueue.poll();
+		//poll from empty queue
+		assertNull(size3InitQueue.poll());
+		
+		//add elements to queue
 		size3InitQueue.add(0);
+		size3InitQueue.add(1);
+		size3InitQueue.add(2);
+		
+		//check the initial size, and remaining queue space
+		assertEquals(3, size3InitQueue.size(), 0);
+		assertEquals(0, size3InitQueue.getRemainingQueueSpace(), 0);
+		
+		//poll the queue. check if the element polled is the first element inserted
+		//check that the size decreased by 1, and the remaining space increase by 1
 		assertEquals(0, size3InitQueue.poll(), 0);
-		assertEquals(null, size3InitQueue.poll());
+		assertEquals(2, size3InitQueue.size(), 0);
+		assertEquals(1, size3InitQueue.getRemainingQueueSpace(), 0);
+		
+		//poll the queue. check if the element polled is the second element inserted
+		//check that the size decreased by 1, and the remaining space increase by 1
+		assertEquals(1, size3InitQueue.poll(), 0);
+		assertEquals(1, size3InitQueue.size(), 0);
+		assertEquals(2, size3InitQueue.getRemainingQueueSpace(), 0);
+		
+		//poll the queue. check if the element polled is the third element inserted
+		//check that the size decreased by 1, and the remaining space increase by 1
+		assertEquals(2, size3InitQueue.poll(), 0);
+		assertEquals(0, size3InitQueue.size(), 0);
+		assertEquals(3, size3InitQueue.getRemainingQueueSpace(), 0);
 	}
 
 	/** Test the element method.
@@ -188,16 +236,40 @@ public class CircularQueueTest {
 	 * </ul> */
 	@Test
 	public void testElement() {
+		//Try to use element on empty queue
+		//Expected exception thrown
 		try {
-			size3InitQueue.element();
-			//TODO probably needs to fail here
+		size3InitQueue.element();
+		fail("Expected exception when using element on empty queue");
 		} catch (Exception e) {
-			//expected exception thrown
+		//pass
+		assertTrue(size3InitQueue.isEmpty());
 		}
+		
+		//Add elements to queue, then use element() to check the front element of queue
+		//Check that element() does not alter the size or remaining space of queue
 		size3InitQueue.add(0);
+		assertEquals(2, size3InitQueue.getRemainingQueueSpace());
 		assertEquals(0, size3InitQueue.element(), 0);
+		assertEquals(0, size3InitQueue.element(), 0);
+		assertEquals(0, size3InitQueue.element(), 0);
+		assertEquals(2, size3InitQueue.getRemainingQueueSpace());
 		size3InitQueue.add(1);
+		assertEquals(1, size3InitQueue.getRemainingQueueSpace());
 		assertEquals(0, size3InitQueue.element(), 0);
+		assertEquals(0, size3InitQueue.element(), 0);
+		assertEquals(0, size3InitQueue.element(), 0);
+		assertEquals(1, size3InitQueue.getRemainingQueueSpace());
+		
+		
+		//Remove elements from queue, then use element() to check the front element of queue
+		//Check that element() does not alter the size or remaining space of queue
+		size3InitQueue.remove();
+		assertEquals(2, size3InitQueue.getRemainingQueueSpace());
+		assertEquals(1, size3InitQueue.element(), 0);
+		assertEquals(1, size3InitQueue.element(), 0);
+		assertEquals(1, size3InitQueue.element(), 0);
+		assertEquals(2, size3InitQueue.getRemainingQueueSpace());
 	}
 
 	/** Test the peek method.
@@ -209,11 +281,32 @@ public class CircularQueueTest {
 	 * </ul> */
 	@Test
 	public void testPeek() {
-		assertEquals(null, size3InitQueue.peek());
+		//peek on an empty queue
+		assertNull(size3InitQueue.peek());
+		
+		//Add elements to queue, then use peek() to check the front element of queue
+		//Check that peek() does not alter the size or remaining space of queue
 		size3InitQueue.add(0);
+		assertEquals(2, size3InitQueue.getRemainingQueueSpace());
 		assertEquals(0, size3InitQueue.peek(), 0);
+		assertEquals(0, size3InitQueue.peek(), 0);
+		assertEquals(0, size3InitQueue.peek(), 0);
+		assertEquals(2, size3InitQueue.getRemainingQueueSpace());
 		size3InitQueue.add(1);
+		assertEquals(1, size3InitQueue.getRemainingQueueSpace());
 		assertEquals(0, size3InitQueue.peek(), 0);
+		assertEquals(0, size3InitQueue.peek(), 0);
+		assertEquals(0, size3InitQueue.peek(), 0);
+		assertEquals(1, size3InitQueue.getRemainingQueueSpace());
+		
+		//Remove elements from queue, then use peek() to check the front element of queue
+		//Check that peek() does not alter the size or remaining space of queue
+		size3InitQueue.remove();
+		assertEquals(2, size3InitQueue.getRemainingQueueSpace());
+		assertEquals(1, size3InitQueue.peek(), 0);
+		assertEquals(1, size3InitQueue.peek(), 0);
+		assertEquals(1, size3InitQueue.peek(), 0);
+		assertEquals(2, size3InitQueue.getRemainingQueueSpace());
 	}
 
 	/** Test the clear method.
@@ -249,9 +342,50 @@ public class CircularQueueTest {
 	 * </ul> */
 	@Test
 	public void testIsEmpty() {
-		assertEquals(size3InitQueue.isEmpty(), true);
+		//check initial queue is empty
+		assertTrue(size3InitQueue.isEmpty());
+		
+		//check initial queue remaining space and capacity are equal
+		assertEquals(size3InitQueue.getRemainingQueueSpace(), size3InitQueue.getQueueCapacity(), 0);
+		
+		//check the initial queue is not full
+		assertFalse(size3InitQueue.isQueueFull());
+		
+		//clear the queue then check that queue is empty
+		size3InitQueue.clear();
+		assertTrue(size3InitQueue.isEmpty());
+		
+		//add elements to queue then check that queue is not empty
 		size3InitQueue.add(0);
-		assertEquals(size3InitQueue.isEmpty(), false);
+		assertFalse(size3InitQueue.isEmpty());
+		size3InitQueue.add(1);
+		assertFalse(size3InitQueue.isEmpty());
+		size3InitQueue.add(2);
+		assertFalse(size3InitQueue.isEmpty());
+		
+		//remove elements from queue check if queue is empty
+		size3InitQueue.remove();
+		assertFalse(size3InitQueue.isEmpty());
+		size3InitQueue.remove();
+		assertFalse(size3InitQueue.isEmpty());
+		size3InitQueue.remove();
+		assertTrue(size3InitQueue.isEmpty());
+		
+		//offer elements to queue then check that queue is not empty
+		size3InitQueue.offer(0);
+		assertFalse(size3InitQueue.isEmpty());
+		size3InitQueue.offer(1);
+		assertFalse(size3InitQueue.isEmpty());
+		size3InitQueue.offer(2);
+		assertFalse(size3InitQueue.isEmpty());
+		
+		//remove elements from queue check if queue is empty
+		size3InitQueue.poll();
+		assertFalse(size3InitQueue.isEmpty());
+		size3InitQueue.poll();
+		assertFalse(size3InitQueue.isEmpty());
+		size3InitQueue.poll();
+		assertTrue(size3InitQueue.isEmpty());
 	}
 
 	/** Test the size method.
@@ -263,9 +397,53 @@ public class CircularQueueTest {
 	 * </ul> Capacity - size - remaining elements == 0 */
 	@Test
 	public void testSize() {
+		//check initial size is 0 and queue is empty
 		assertEquals(0, size3InitQueue.size(), 0);
+		assertTrue(size3InitQueue.isEmpty());
+		
+		//add elements to queue, check that size increases by 1 each time
 		size3InitQueue.add(0);
 		assertEquals(1, size3InitQueue.size(), 0);
+		assertEquals(0, size3InitQueue.getQueueCapacity() - size3InitQueue.size() - size3InitQueue.getRemainingQueueSpace() , 0);
+		size3InitQueue.add(1);
+		assertEquals(2, size3InitQueue.size(), 0);
+		assertEquals(0, size3InitQueue.getQueueCapacity() - size3InitQueue.size() - size3InitQueue.getRemainingQueueSpace() , 0);
+		size3InitQueue.add(2);
+		assertEquals(3, size3InitQueue.size(), 0);
+		assertEquals(0, size3InitQueue.getQueueCapacity() - size3InitQueue.size() - size3InitQueue.getRemainingQueueSpace() , 0);
+		
+		//remove elements from queue, check that size decreases by 1 each time
+		size3InitQueue.remove();
+		assertEquals(2, size3InitQueue.size(), 0);
+		assertEquals(0, size3InitQueue.getQueueCapacity() - size3InitQueue.size() - size3InitQueue.getRemainingQueueSpace() , 0);
+		size3InitQueue.remove();
+		assertEquals(1, size3InitQueue.size(), 0);
+		assertEquals(0, size3InitQueue.getQueueCapacity() - size3InitQueue.size() - size3InitQueue.getRemainingQueueSpace() , 0);
+		size3InitQueue.remove();
+		assertEquals(0, size3InitQueue.size(), 0);
+		assertEquals(0, size3InitQueue.getQueueCapacity() - size3InitQueue.size() - size3InitQueue.getRemainingQueueSpace() , 0);
+		
+		//offer elements to queue, check that size increases by 1 each time
+		size3InitQueue.offer(0);
+		assertEquals(1, size3InitQueue.size(), 0);
+		assertEquals(0, size3InitQueue.getQueueCapacity() - size3InitQueue.size() - size3InitQueue.getRemainingQueueSpace() , 0);
+		size3InitQueue.offer(1);
+		assertEquals(2, size3InitQueue.size(), 0);
+		assertEquals(0, size3InitQueue.getQueueCapacity() - size3InitQueue.size() - size3InitQueue.getRemainingQueueSpace() , 0);
+		size3InitQueue.offer(2);
+		assertEquals(3, size3InitQueue.size(), 0);
+		assertEquals(0, size3InitQueue.getQueueCapacity() - size3InitQueue.size() - size3InitQueue.getRemainingQueueSpace() , 0);
+		
+		//poll elements from queue, check that size decreases by 1 each time
+		size3InitQueue.poll();
+		assertEquals(2, size3InitQueue.size(), 0);
+		assertEquals(0, size3InitQueue.getQueueCapacity() - size3InitQueue.size() - size3InitQueue.getRemainingQueueSpace() , 0);
+		size3InitQueue.poll();
+		assertEquals(1, size3InitQueue.size(), 0);
+		assertEquals(0, size3InitQueue.getQueueCapacity() - size3InitQueue.size() - size3InitQueue.getRemainingQueueSpace() , 0);
+		size3InitQueue.poll();
+		assertEquals(0, size3InitQueue.size(), 0);
+		assertEquals(0, size3InitQueue.getQueueCapacity() - size3InitQueue.size() - size3InitQueue.getRemainingQueueSpace() , 0);
 	}
 
 	/** Test the toArray method.
@@ -302,9 +480,39 @@ public class CircularQueueTest {
 	 * </ul> Capacity - size - remaining elements == 0 */
 	@Test
 	public void testGetRemainingQueueSpace() {
+		//add elements to queue, check the remaining space is decreasing by 1
 		assertEquals(3, size3InitQueue.getRemainingQueueSpace(), 0);
 		size3InitQueue.add(0);
 		assertEquals(2, size3InitQueue.getRemainingQueueSpace(), 0);
+		size3InitQueue.add(1);
+		assertEquals(1, size3InitQueue.getRemainingQueueSpace(), 0);
+		size3InitQueue.add(2);
+		assertEquals(0, size3InitQueue.getRemainingQueueSpace(), 0);
+		
+		//remove elements from queue, check the remaining space is increasing by 1
+		size3InitQueue.remove();
+		assertEquals(1, size3InitQueue.getRemainingQueueSpace(), 0);
+		size3InitQueue.remove();
+		assertEquals(2, size3InitQueue.getRemainingQueueSpace(), 0);
+		size3InitQueue.remove();
+		assertEquals(3, size3InitQueue.getRemainingQueueSpace(), 0);
+		
+		//offer elements to queue, check the remaining space is decreasing by 1
+		size3InitQueue.offer(0);
+		assertEquals(2, size3InitQueue.getRemainingQueueSpace(), 0);
+		size3InitQueue.offer(1);
+		assertEquals(1, size3InitQueue.getRemainingQueueSpace(), 0);
+		size3InitQueue.offer(2);
+		assertEquals(0, size3InitQueue.getRemainingQueueSpace(), 0);
+		
+		//poll elements from queue, check the remaining space is increasing by 1
+		size3InitQueue.poll();
+		assertEquals(1, size3InitQueue.getRemainingQueueSpace(), 0);
+		size3InitQueue.poll();
+		assertEquals(2, size3InitQueue.getRemainingQueueSpace(), 0);
+		size3InitQueue.poll();
+		assertEquals(3, size3InitQueue.getRemainingQueueSpace(), 0);
+
 	}
 
 	/** Test the isEmpty method.
@@ -317,14 +525,38 @@ public class CircularQueueTest {
 	 * </ul> */
 	@Test
 	public void testIsQueueFull() {
-		assertEquals(false, size3InitQueue.isQueueFull());
+		//check if initial queue is full
+		assertFalse(size3InitQueue.isQueueFull());
+		
+		//add elements to queue, check if queue is full, size increases by 1, space decreases by 1 each time
+		assertFalse(size3InitQueue.isQueueFull());
+		assertEquals(0, size3InitQueue.size(), 0);
+		assertEquals(3, size3InitQueue.getRemainingQueueSpace(), 0);
 		size3InitQueue.add(0);
-		assertEquals(false, size3InitQueue.isQueueFull());
+		assertFalse(size3InitQueue.isQueueFull());
+		assertEquals(1, size3InitQueue.size(), 0);
+		assertEquals(2, size3InitQueue.getRemainingQueueSpace(), 0);
 		size3InitQueue.add(1);
-		assertEquals(false, size3InitQueue.isQueueFull());
+		assertFalse(size3InitQueue.isQueueFull());
+		assertEquals(2, size3InitQueue.size(), 0);
+		assertEquals(1, size3InitQueue.getRemainingQueueSpace(), 0);
 		size3InitQueue.add(2);
-		assertEquals(true, size3InitQueue.isQueueFull());
+		assertTrue(size3InitQueue.isQueueFull());
+		assertEquals(3, size3InitQueue.size(), 0);
+		assertEquals(0, size3InitQueue.getRemainingQueueSpace(), 0);
+		
+		//remove elements to queue, check if queue is full, size decreases by 1, space increase by 1 each time
 		size3InitQueue.remove();
-		assertEquals(false, size3InitQueue.isQueueFull());
+		assertFalse(size3InitQueue.isQueueFull());
+		assertEquals(2, size3InitQueue.size(), 0);
+		assertEquals(1, size3InitQueue.getRemainingQueueSpace(), 0);
+		size3InitQueue.remove();
+		assertFalse(size3InitQueue.isQueueFull());
+		assertEquals(1, size3InitQueue.size(), 0);
+		assertEquals(2, size3InitQueue.getRemainingQueueSpace(), 0);
+		size3InitQueue.remove();
+		assertFalse(size3InitQueue.isQueueFull());
+		assertEquals(0, size3InitQueue.size(), 0);
+		assertEquals(3, size3InitQueue.getRemainingQueueSpace(), 0);
 	}
 }
