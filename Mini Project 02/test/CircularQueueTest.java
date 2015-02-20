@@ -98,14 +98,43 @@ public class CircularQueueTest {
 	 * </ul> */
 	@Test
 	public void testOffer() {
-		size3InitQueue.offer(0);
-		size3InitQueue.offer(1);
-		size3InitQueue.offer(2);
-		size3InitQueue.offer(3);
-		assertEquals(3, size3InitQueue.remove(), 0);
-		assertEquals(1, size3InitQueue.remove(), 0);
-		assertEquals(2, size3InitQueue.remove(), 0);
-		//TODO test the return is correct?
+	//Offer one element to queue check if size increased by 1, remaining size decreased by 1
+	//and queue is not full
+	assertTrue(size3InitQueue.offer(0));
+	assertFalse(size3InitQueue.isEmpty());
+	assertEquals(1, size3InitQueue.size(), 0);
+	assertEquals(2, size3InitQueue.getRemainingQueueSpace(), 0);
+	assertFalse(size3InitQueue.isQueueFull());
+	
+	//Offer second element to queue check if size increased by 1, remaining size decreased by 1
+	//and queue is not full
+	assertTrue(size3InitQueue.offer(1));
+	assertFalse(size3InitQueue.isEmpty());
+	assertEquals(2, size3InitQueue.size(), 0);
+	assertEquals(1, size3InitQueue.getRemainingQueueSpace(), 0);
+	assertFalse(size3InitQueue.isQueueFull());
+	
+	//Offer third element to queue check if size increased by 1, remaining size decreased by 1
+	//and queue is full
+	assertTrue(size3InitQueue.offer(2));
+	assertFalse(size3InitQueue.isEmpty());
+	assertEquals(3, size3InitQueue.size(), 0);
+	assertEquals(0, size3InitQueue.getRemainingQueueSpace(), 0);
+	assertTrue(size3InitQueue.isQueueFull());
+	
+	//Offer one element to queue check if size remains the same, remaining size is the same
+	//and queue is full
+	assertFalse(size3InitQueue.offer(3));
+	assertFalse(size3InitQueue.isEmpty());
+	assertEquals(3, size3InitQueue.size(), 0);
+	assertEquals(0, size3InitQueue.getRemainingQueueSpace(), 0);
+	assertTrue(size3InitQueue.isQueueFull());
+	
+	//Remove elements from queue to ensure they were input in correct order
+	assertEquals(0, size3InitQueue.remove(), 0);
+	assertEquals(1, size3InitQueue.remove(), 0);
+	assertEquals(2, size3InitQueue.remove(), 0);
+
 	}
 
 	/** Test the remove method.
