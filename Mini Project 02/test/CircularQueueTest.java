@@ -27,7 +27,7 @@ public class CircularQueueTest {
 	 * <li>Ensure the circular queue constructor functions, predominantly by testing various capacity values.</li>
 	 * <li>Positive values should succeed. Zero or negative values should throw an exception.</li>
 	 * </ul>
-	 * @author uidris */
+	 * @author Umar */
 	@Test
 	public void testCircularQueueConstructor() {
 		try {
@@ -326,7 +326,7 @@ public class CircularQueueTest {
 	 * <li>Cause isEmpty to return true</li>
 	 * <li>Cause the number of elements remaining to equal capacity</li>
 	 * </ul> 
-	 * @author uidris*/
+	 * @author Umar*/
 	@Test
 	public void testClear() {
 		
@@ -477,7 +477,7 @@ public class CircularQueueTest {
 	 * and the order is the same as would be obtained through repeated use of remove/poll.</li>
 	 * <li>This array is independent of the one maintained by the queue and altering its elements will not impact the queue</li>
 	 * </ul>
-	 * @author uidris */
+	 * @author Umar */
 	@Test
 	public void testToArray() {
 		
@@ -495,7 +495,7 @@ public class CircularQueueTest {
 	 * <ui>
 	 * <li>Should always return the same value as used by the constructor, regardless of other queue operations.</li>
 	 * </ui>
-	 * @author uidris 
+	 * @author Umar 
 	 * */
 	@Test
 	public void testGetQueueCapacity() {
