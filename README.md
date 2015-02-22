@@ -22,3 +22,5 @@ which will be ignored by Git. This should already be set up.
 - Git + GitHub Tools: [Overview Site](http://eclipse.org/egit/download/)
   - [Eclipse Git Support Install Site](http://download.eclipse.org/egit/updates)
   - [GitHub Issues Integration Install Site](http://download.eclipse.org/egit/github/updates)
+- [Control FLow Graph Generator](http://eclipsefcg.sourceforge.net/) -- 
+  [Eclipse Install](http://eclipsefcg.sourceforge.net/)
