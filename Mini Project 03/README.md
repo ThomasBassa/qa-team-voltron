@@ -44,7 +44,13 @@ May want to clone the GitHub repo instead. Not sure whether pushing to remote
 from a local-only repo is more or less difficult than cloning first.
 
 Regarding issues...
+
 1. Show Task List view in Eclipse
-2. Add a new task db (forget the proper name)
-3. Add a view that doesn't filter anything
-4. Issues now present. Add new ones to the same place...
+2. Add a new task respository of the GitHub Issues type
+	- Server -> your repository
+	- Label -> Doesn't matter, pick one
+	- User id -> GitHub username (needed for issue creation)
+	- Password -> GitHub password (also needed for creation); tick Save Password
+3. Add a query that doesn't filter anything
+4. Issues now present. Use the Task List's New Task button to make new issues.
+5. Make sure to use the synchronize button to keep the list up to date with what GitHub sees
