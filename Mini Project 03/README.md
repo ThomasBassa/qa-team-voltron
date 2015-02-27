@@ -60,7 +60,7 @@ copy some work from an old project that you would like to share, do what you lik
 When you would like to save your work to version control, right click on your project
 and select `Team > Commit...` or press `Ctrl+Shift+3` by default.
 
-`TODO Commit menu image`
+![Team Menu](https://cloud.githubusercontent.com/assets/10538609/6407511/93b3b05e-be0f-11e4-9f8a-ad66c0be5824.png)
 
 In the dialog that appears, enter a message describing what changed since last time
 (keep it short and distinct), and select all of the checkboxes for new files to commit.
@@ -91,7 +91,7 @@ use the menus to select `Window > Show View > Task List`.
 Inside the Task List view is a button with a white icon and dropdown menu; use that dropdown
 and select `Add Repository...` as seen in the screenshot below.
 
-`TODO Add repo image`
+![Task List](https://cloud.githubusercontent.com/assets/10538609/6407516/a8f5b91c-be0f-11e4-9329-98928b0135cb.png)
 
 From there, select `GitHub Issues` and click `Next`.
 Fill in the form as follows:
@@ -148,36 +148,3 @@ that integrates with Eclipse** and allows collaborative team work
    and **a user manual** on how to use it.
 2. You will also need to **make a tutorial video**
    that shows "dummies" how to make it work!
-
-## What's to Come
-This README will end up being replaced with said user manual (_probably_
-written in Markdown) and include a link to the video. Keep an eye out!
-
-# A Start / References
-## Features
-- [GitHub Features (everything)](https://github.com/features)
-- [GitHub Issues Guide](https://guides.github.com/features/issues/)
-  - See also everything else on https://guides.github.com/
-
-## Download/Installation
-- Git + GitHub Eclipse Integrations: [Via GitHub](https://eclipse.github.io/) ->
-  [Overview Site](http://eclipse.org/egit/download/)
-  - [Eclipse Git Support Install Site](http://download.eclipse.org/egit/updates)
-  - [GitHub Issues Integration Install Site](http://download.eclipse.org/egit/github/updates)
-
-Installing the Eclipse stuff is really straightforward;
-just pop the install sites above into the `Help > Install New Software...` menu.
-Click next/finish a few times and let Eclipse do the rest.
-
-Actually using the plugins is where the writing effort needs to go.
-
-## Partial Issues "Guide"
-1. Show Task List view in Eclipse
-2. Add a new task respository of the GitHub Issues type
-	- Server -> your repository
-	- Label -> Doesn't matter, pick one
-	- User id -> GitHub username (needed for issue creation)
-	- Password -> GitHub password (also needed for creation); tick Save Password
-3. Add a query that doesn't filter anything
-4. Issues now present. Use the Task List's New Task button to make new issues.
-5. Make sure to use the synchronize button to keep the list up to date with what GitHub sees
