@@ -23,6 +23,7 @@ With your repository up and running, you can then clone it to your Eclipse works
 In Eclipse, use the menus to select `File > Import...`. This can also be found by right-clicking in
 an empty part of the Package Explorer. In the Import wizard, select `Git > Projects from Git`.
 **Do NOT select `Repositories from GitHub`, as this will _not_ create an Eclipse project for you.**
+That option will silently clone a repository to a default location that Eclipse probably isn't even watching.
 
 On the next screen following Projects from Git, select `GitHub`, then click Next.
 Enter the name of your repository (the part after your name and slash-- for example,
@@ -54,12 +55,65 @@ Eclipse will create a project using the default settings. Click `Finish`.
 At this point, you will have an Eclipse project that is all ready to go for making changes.
 
 ## Commit and Push changes
+At this point, make whatever changes you like to your new project. Add some source code,
+copy some work from an old project that you would like to share, do what you like.
+When you would like to save your work to version control, right click on your project
+and select `Team > Commit...` or press `Ctrl+Shift+3` by default.
 
-## Clone an Existing Repository
+`TODO Commit menu image`
+
+In the dialog that appears, enter a message describing what changed since last time
+(keep it short and distinct), and select all of the checkboxes for new files to commit.
+If this is your first commit to this repository, you will probably add a `.classpath` and `.project`
+in addition to whatever source code files you may have added.
+
+From here, you have a choice; `Commit` will save your changes to version control _on your local machine only_.
+`Commit and Push` will do the same _AND_ push all changes you have made to the remote server--
+your GitHub repository. Unless you're making a large number of commits in a short period of time,
+`Commit and Push` will get the job done for you.
+
+`TODO Push after commit`
+
+`TODO Pull`
 
 ## Hook up GitHub Issues to Mylyn (the Eclipse task list)
+Eclipse Mylyn is the task management system built into Eclipse.
+It doesn't do much on its own; it has to be hooked in to a repository somewhere.
+With the GitHub Mylyn connector, you may display your GitHub Gists, Issues, and Pull Requests
+in the Eclipse Task List.
+
+First off, you need to show the `Task List` view if it isn't visible. If you can't find it,
+use the menus to select `Window > Show View > Task List`.
+Inside the Task List view is a button with a white icon and dropdown menu; use that dropdown
+and select `Add Repository...` as seen in the screenshot below.
+
+`TODO Add repo image`
+
+From there, select `GitHub Issues` and click `Next`.
+Fill in the form as follows:
+- Server: Enter the URL for your GitHub repository home page. For example, this repository's issues
+  can be obtained from https://github.com/ThomasBassa/qa-team-voltron/
+- Label: Give the task repository a readable name, this doesn't matter unless you have a lot of repositories to watch.
+- User ID: Enter your GitHub username if you would like to be able to add tasks. If you only want to view
+  the existing issues from within Eclipse, then you can tick the `Anonymous` checkbox and click `Finish`.
+- Password: Enter your GitHub password if you would like to be able to create issues from Eclipse.
+  We recommend that you opt to save your password if you intend on doing so often.
+- Leave the rest of the settings as default, and click `Finish`.
+
+Eclipse will then prompt you to _add a query to the Task List for this repository_.
+Select `Yes`. A query is used to display a set of issues to you; if you selected no,
+you will not see any issues in the Task List until you make a query. If you did so by mistake,
+you can select `New Query...` from the same menu that you created a repository from (see image above)
+and select the repository with the label you defined in the previous step.
+
+In the new query dialog, give the query a readable title. If you would like to see all of the
+issues on the repository, then leave all of the other fields alone and click `Finish`.
+Otherwise, you can change the parameters of the query to filter out specific types of issues.
+
+You can now see all of the issues that are in the repository, get to work!
 
 ## Add an Issue
+
 
 # Mini Project 3 Assignment
 For this mini project, your team is assigned a research task
