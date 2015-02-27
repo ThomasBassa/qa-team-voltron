@@ -72,9 +72,13 @@ From here, you have a choice; `Commit` will save your changes to version control
 your GitHub repository. Unless you're making a large number of commits in a short period of time,
 `Commit and Push` will get the job done for you.
 
-`TODO Push after commit`
+If you decide you would like to push changes after making a few normal commits,
+right-click on your project and select `Team > Push to Upstream`, as depicted in the previous image.
+This will update your GitHub repository with all of the commits you have made so far.
 
-`TODO Pull`
+To acquire the changes your collaborators might have made while you were away,
+right-click on your project and select `Team > Pull` which you can see in the previous image.
+This will update your working copy to the latest revision of the GitHub repository.
 
 ## Hook up GitHub Issues to Mylyn (the Eclipse task list)
 Eclipse Mylyn is the task management system built into Eclipse.
@@ -113,7 +117,25 @@ Otherwise, you can change the parameters of the query to filter out specific typ
 You can now see all of the issues that are in the repository, get to work!
 
 ## Add an Issue
+After you have set up the Issues task repository, you can add an issue using the `New Task...` button
+depicted previously. Select the task repository you created earlier, and click Finish.
 
+The New Task dialog is pretty busy. Here are the key elements:
+- The text field at the top of the dialog is the issue title.
+- The Attributes section is used to add GitHub labels and Milestones to an issue.
+  You can also create new labels from this dialog.
+- The Private section **does not get published to GitHub**, but can be used to schedule when you think this task
+  should be done, along with its difficulty. It will not synchronize with GitHub Issues.
+- The Description section is used to describe the problem. Write a detailed report using Markdown!
+- The People section can be used to assign a person to the issue. It is possible to auto-complete usernames
+  of repository contributors by pressing `Ctrl+Space` by default.
+- Finally, the Actions section contains the Submit button, which will publish your issue to the repository
+  the next time you decide to synchronize it. The `Add To Category` selection does nothing.
+
+If you choose to open an existing issue (by double clicking on it in the Task List),
+you will have the ability to write a comment on the issue,
+as well as close it using a radio button in the `Actions` section. Don't forget to submit the issue
+and synchronize it, to see the changes on GitHub.
 
 # Mini Project 3 Assignment
 For this mini project, your team is assigned a research task
