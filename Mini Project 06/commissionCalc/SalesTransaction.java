@@ -4,15 +4,15 @@ package commissionCalc;
 /** This class holds information about
  * the amount of a transaction and the type of the transaction. */
 public class SalesTransaction {
-	/** This attribute is the type of the transaction. Must be one of the types
-	 * defined in the iCommissionCalculator. */
-	private int transactionType;
+	/** This attribute is the type of the transaction;
+	 * one of the variants in the SaleType enumeration. */
+	private SaleType transactionType;
 
 	/** This is the amount of the transaction, in dollars and cents. */
 	private double transactionAmount;
 
 	/** This constructor will instantiate a new instance of a transaction type.
-	 * @param transactionType
+	 * @param salesType
 	 *            This is the type of the transaction. It must be one of the
 	 *            ones defined in the iCommissionCalculator.
 	 * @param transactionAmount
@@ -22,27 +22,28 @@ public class SalesTransaction {
 	 *             an Exception will be thrown if the amount is negative or the
 	 *             transaction type is invalid.
 	 */
-	public SalesTransaction(int transactionType, double transactionAmount)
+	public SalesTransaction(SaleType salesType, double transactionAmount)
 			throws Exception {
 		super();
 
-		if((transactionType != iCommissionCalculator.BASIC_ITEM)
-				&& (transactionType != iCommissionCalculator.CONSULTING_ITEM)
-				&& (transactionType != iCommissionCalculator.MAINTENANCE_ITEM)
-				&& (transactionType != iCommissionCalculator.REPLACEMNET_ITEM)) { throw new Exception(
+		/* TRB
+		if((salesType != iCommissionCalculator.BASIC_ITEM)
+				&& (salesType != iCommissionCalculator.CONSULTING_ITEM)
+				&& (salesType != iCommissionCalculator.MAINTENANCE_ITEM)
+				&& (salesType != iCommissionCalculator.REPLACEMNET_ITEM)) { throw new Exception(
 				"Invalid transaction type."); }
+		TRB Entire block is rendered unnecessary by use of enum. */
 
-		if((transactionAmount < 0)) { throw new Exception(
-				"Invalid transaction amount."); }
-		this.transactionType = transactionType;
+		if((transactionAmount < 0))	throw new Exception("Invalid transaction amount.");
+		
+		this.transactionType = salesType;
 		this.transactionAmount = transactionAmount;
 	}
 
 	/**
-	 * @return the transactionType The transaction type is defined in the
-	 *         iCommissionCalculator.
+	 * @return the transactionType, as defined in the SaleType enum.
 	 */
-	public int getTransactionType() {
+	public SaleType getTransactionType() {
 		return transactionType;
 	}
 

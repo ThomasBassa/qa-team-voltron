@@ -8,13 +8,14 @@ import java.util.List;
 /** This class will handle the calculatioon of employee commissions. */
 public class CommissionCalculator implements iCommissionCalculator {
 
+	/* TRB
 	private static final double MINIMUM_PROBATIONARY_SALES_FOR_COMMISSION = 2000.00;
-
 	private static final double MINIMUM_EXPERIENCED_SALES_FOR_COMMISSION = 5000.00;
 
 	private static final double MINIMUM_PROBATIONARY_SALES_FOR_BONUS_COMMISSION = 50000.00;
-
 	private static final double MINIMUM_EXPERIENCED_SALES_FOR_BONUS_COMMISSION = 100000.00;
+	This section removed in favor of storing the data in EmployeeExperience enum
+	*/
 
 	/**
 	 * This method will construct a new instance of a commission calculator.
@@ -25,7 +26,7 @@ public class CommissionCalculator implements iCommissionCalculator {
 	 *            This is the experience level of the employee from the
 	 *            parameters defined in the interface.
 	 */
-	public CommissionCalculator(String employeeName, int employeeExperience) {
+	public CommissionCalculator(String employeeName, EmployeeExperience employeeExperience) {
 		super();
 		this.employeeName = employeeName;
 		this.employeeExperience = employeeExperience;
@@ -37,21 +38,19 @@ public class CommissionCalculator implements iCommissionCalculator {
 	 */
 	private List<SalesTransaction> transactions = new ArrayList<SalesTransaction>();
 
-	/**
-	 * This is the name of the employee.
-	 */
+	/** This is the name of the employee. */
 	private String employeeName;
 
-	/**
-	 * This variable will keep information about how much experience the given
-	 * employee has.
-	 */
-	private int employeeExperience;
+	/** This variable keeps information about how much experience the given
+	 * employee has. */
+	private EmployeeExperience employeeExperience;
 
 	@Override
-	public void addSale(int salesType, double dollarAmount) {
+	//TRB public void addSale(int salesType, double dollarAmount) {
+	//TRB Replace with enum type.
+	public void addSale(SaleType salesType, double dollarAmount) {
 		try {
-			// Instantiate a new instance of a sales.
+			// Instantiate a new instance of a sale.
 			SalesTransaction s = new SalesTransaction(salesType, dollarAmount);
 
 			// Add it to the list of sales for this month.
@@ -73,15 +72,17 @@ public class CommissionCalculator implements iCommissionCalculator {
 	}
 
 	@Override
-	public void setEmployeeExperience(int employeeExperience) {
-		if((employeeExperience == iCommissionCalculator.EXPERIENCED)
-				|| (employeeExperience == iCommissionCalculator.PROBATIONARY)) {
-			this.employeeExperience = employeeExperience;
-		}
+	public void setEmployeeExperience(EmployeeExperience employeeExperience) {
+		//TRB if((employeeExperience == iCommissionCalculator.EXPERIENCED)
+		//TRB		|| (employeeExperience == iCommissionCalculator.PROBATIONARY)) {
+		//TRB Replaced with enumeration, therefore no check of value needed.
+		this.employeeExperience = employeeExperience;
+		//}
 	}
 
 	@Override
 	public double calculateCommission() {
+		/* TRB
 		final double commissionRatesForProbationaryEmployee[] = {2, 3, 1, 3};
 		final double commissionRatesForExperiencedEmployee[] = {0.04, 0.06, 0.015, 0.08};
 
@@ -96,6 +97,7 @@ public class CommissionCalculator implements iCommissionCalculator {
 		} else {
 			commissionTable = null;
 		}
+		TRB Yet another large block rendered pointless by an enum */
 
 		// Now that the tables are set, determine the minimum amount for a
 		// commission.
@@ -112,7 +114,9 @@ public class CommissionCalculator implements iCommissionCalculator {
 			if(netSales >= minimumSalesForCommission) {
 
 				commission += s.getTransactionAmount()
-						* commissionTable[s.getTransactionType()];
+						//TRB * commissionTable[s.getTransactionType()];
+						* s.getTransactionType().getCommissionRate(employeeExperience);
+						//TRB Refactored to use enum call.
 			} else if((netSales + s.getTransactionAmount()) >= minimumSalesForCommission) {
 				// We need to determine how much of this sale qualifies for
 				// commission.
@@ -120,7 +124,9 @@ public class CommissionCalculator implements iCommissionCalculator {
 						.getTransactionAmount()) - minimumSalesForCommission;
 				netSales += s.getTransactionAmount();
 				commission += commissionableAmount
-						* commissionTable[s.getTransactionType()];
+						//TRB * commissionTable[s.getTransactionType()];
+						* s.getTransactionType().getCommissionRate(employeeExperience);
+						//TRB Refactored to use enum call.
 			} else {
 				// No commission. Simply go on.
 				netSales += s.getTransactionAmount();
@@ -132,14 +138,18 @@ public class CommissionCalculator implements iCommissionCalculator {
 
 	@Override
 	public double calculateBonusCommission() {
+		/* TRB 
 		final double BONUS_COMMISSION_FOR_PROBATIONARY_EMPLOYEE_RATE = 0.005;
 		final double BONUS_COMMISSION_FOR_EXPERIENCED_EMPLOYEE_RATE = 0.015;
-
-		double bonusCommissionRate;
-		double minimumSalesForBonusCommission;
+		TRB Data moved to enumeration. */
 
 		// Setup based on the employee type type value of commissions that
 		// should be paid out.
+		//TRB Added initializers from enum.
+		double bonusCommissionRate = employeeExperience.getBonusCommissionRate();
+		double minimumSalesForBonusCommission = employeeExperience.getMinBonusSales();
+
+		/* TRB
 		if(this.employeeExperience == iCommissionCalculator.PROBATIONARY) {
 			bonusCommissionRate = BONUS_COMMISSION_FOR_PROBATIONARY_EMPLOYEE_RATE;
 			minimumSalesForBonusCommission = MINIMUM_PROBATIONARY_SALES_FOR_BONUS_COMMISSION;
@@ -150,6 +160,7 @@ public class CommissionCalculator implements iCommissionCalculator {
 			bonusCommissionRate = 0;
 			minimumSalesForBonusCommission = 0;
 		}
+		TRB Entire block rendered useless by enumeration. */
 
 		// This is the net sales that the salesman has this month.
 		double netSales = 0.00;
@@ -182,6 +193,7 @@ public class CommissionCalculator implements iCommissionCalculator {
 
 	@Override
 	public double getMinimumSales() {
+		/* TRB
 		double retVal = 0;
 		if(this.employeeExperience == iCommissionCalculator.PROBATIONARY) {
 			retVal = CommissionCalculator.MINIMUM_PROBATIONARY_SALES_FOR_COMMISSION;
@@ -191,6 +203,8 @@ public class CommissionCalculator implements iCommissionCalculator {
 			retVal = 0.00;
 		}
 		return retVal;
+		TRB This entire block rendered useless by enum. */
+		return employeeExperience.getMinCommissionSales();
 	}
 
 	@Override
