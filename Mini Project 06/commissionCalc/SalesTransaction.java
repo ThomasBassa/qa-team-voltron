@@ -1,33 +1,23 @@
 package commissionCalc;
 
 
-/**
- * This class holds information about the amount of a transaction and the type
- * of the transaction.
- * 
- * 
- */
+/** This class holds information about
+ * the amount of a transaction and the type of the transaction. */
 public class SalesTransaction {
-	/**
-	 * This attribute is the type of the transaction. Must be one of the types
-	 * defined in the iCommissionCalculator.
-	 */
+	/** This attribute is the type of the transaction. Must be one of the types
+	 * defined in the iCommissionCalculator. */
 	private int transactionType;
 
-	/**
-	 * This is the amount of the transaction, in dollars and cents.
-	 */
+	/** This is the amount of the transaction, in dollars and cents. */
 	private double transactionAmount;
 
-	/**
-	 * This constructor will instantiate a new instance of a transaction type.
-	 * 
+	/** This constructor will instantiate a new instance of a transaction type.
 	 * @param transactionType
 	 *            This is the type of the transaction. It must be one of the
 	 *            ones defined in the iCommissionCalculator.
 	 * @param transactionAmount
-	 *            This si the dollar amount of the transaction. It must be
-	 *            positive.
+	 *            This is the dollar amount of the transaction.
+	 *            It must be positive.
 	 * @throws Exception
 	 *             an Exception will be thrown if the amount is negative or the
 	 *             transaction type is invalid.
@@ -36,16 +26,14 @@ public class SalesTransaction {
 			throws Exception {
 		super();
 
-		if ((transactionType != iCommissionCalculator.BASIC_ITEM)
+		if((transactionType != iCommissionCalculator.BASIC_ITEM)
 				&& (transactionType != iCommissionCalculator.CONSULTING_ITEM)
 				&& (transactionType != iCommissionCalculator.MAINTENANCE_ITEM)
-				&& (transactionType != iCommissionCalculator.REPLACEMNET_ITEM)) {
-			throw new Exception("Invalid transaction type.");
-		}
+				&& (transactionType != iCommissionCalculator.REPLACEMNET_ITEM)) { throw new Exception(
+				"Invalid transaction type."); }
 
-		if ((transactionAmount < 0)) {
-			throw new Exception("Invalid transaction amount.");
-		}
+		if((transactionAmount < 0)) { throw new Exception(
+				"Invalid transaction amount."); }
 		this.transactionType = transactionType;
 		this.transactionAmount = transactionAmount;
 	}
@@ -58,9 +46,7 @@ public class SalesTransaction {
 		return transactionType;
 	}
 
-	/**
-	 * This method will obtain the dollar amount for the transaction.
-	 * 
+	/** This method will obtain the dollar amount for the transaction.
 	 * @return the transactionAmount This si the dollar amount of the
 	 *         transaction.
 	 */

@@ -1,20 +1,19 @@
 package commissionCalc;
 
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 
-/**
- * This class will handle the calculatioon of employee commissions.
- */
+/** This class will handle the calculatioon of employee commissions. */
 public class CommissionCalculator implements iCommissionCalculator {
 
 	private static final double MINIMUM_PROBATIONARY_SALES_FOR_COMMISSION = 2000.00;
+
 	private static final double MINIMUM_EXPERIENCED_SALES_FOR_COMMISSION = 5000.00;
 
 	private static final double MINIMUM_PROBATIONARY_SALES_FOR_BONUS_COMMISSION = 50000.00;
+
 	private static final double MINIMUM_EXPERIENCED_SALES_FOR_BONUS_COMMISSION = 100000.00;
 
 	/**
@@ -26,7 +25,6 @@ public class CommissionCalculator implements iCommissionCalculator {
 	 *            This is the experience level of the employee from the
 	 *            parameters defined in the interface.
 	 */
-
 	public CommissionCalculator(String employeeName, int employeeExperience) {
 		super();
 		this.employeeName = employeeName;
@@ -58,9 +56,7 @@ public class CommissionCalculator implements iCommissionCalculator {
 
 			// Add it to the list of sales for this month.
 			this.transactions.add(s);
-		} catch (Exception e) {
-		}
-
+		} catch (Exception e) {}
 	}
 
 	@Override
@@ -69,7 +65,7 @@ public class CommissionCalculator implements iCommissionCalculator {
 
 		Iterator<SalesTransaction> iter = this.transactions.iterator();
 
-		while (iter.hasNext()) {
+		while(iter.hasNext()) {
 			SalesTransaction s = iter.next();
 			totalSales += s.getTransactionAmount();
 		}
@@ -78,27 +74,24 @@ public class CommissionCalculator implements iCommissionCalculator {
 
 	@Override
 	public void setEmployeeExperience(int employeeExperience) {
-		if ((employeeExperience == iCommissionCalculator.EXPERIENCED)
+		if((employeeExperience == iCommissionCalculator.EXPERIENCED)
 				|| (employeeExperience == iCommissionCalculator.PROBATIONARY)) {
 			this.employeeExperience = employeeExperience;
 		}
-
 	}
 
 	@Override
 	public double calculateCommission() {
-		final double commissionRatesForProbationaryEmployee[] = { 2, 3,
-				1, 3 };
-		final double commissionRatesForExperiencedEmployee[] = { 0.04, 0.06,
-				0.015, 0.08 };
+		final double commissionRatesForProbationaryEmployee[] = {2, 3, 1, 3};
+		final double commissionRatesForExperiencedEmployee[] = {0.04, 0.06, 0.015, 0.08};
 
 		double commissionTable[];
 
 		// Setup based on the employee type type value of commissions that
 		// should be paid out.
-		if (this.employeeExperience == iCommissionCalculator.PROBATIONARY) {
+		if(this.employeeExperience == iCommissionCalculator.PROBATIONARY) {
 			commissionTable = commissionRatesForProbationaryEmployee;
-		} else if (this.employeeExperience == iCommissionCalculator.EXPERIENCED) {
+		} else if(this.employeeExperience == iCommissionCalculator.EXPERIENCED) {
 			commissionTable = commissionRatesForExperiencedEmployee;
 		} else {
 			commissionTable = null;
@@ -113,14 +106,14 @@ public class CommissionCalculator implements iCommissionCalculator {
 		double commission = 0.00;
 
 		// Iterate over all transactions.
-		for (SalesTransaction s : this.transactions) {
+		for(SalesTransaction s : this.transactions) {
 			// If we have already met the threshold for sales, simply add the
 			// commission in.
-			if (netSales >= minimumSalesForCommission) {
-				
+			if(netSales >= minimumSalesForCommission) {
+
 				commission += s.getTransactionAmount()
 						* commissionTable[s.getTransactionType()];
-			} else if ((netSales + s.getTransactionAmount()) >= minimumSalesForCommission) {
+			} else if((netSales + s.getTransactionAmount()) >= minimumSalesForCommission) {
 				// We need to determine how much of this sale qualifies for
 				// commission.
 				double commissionableAmount = (netSales + s
@@ -147,10 +140,10 @@ public class CommissionCalculator implements iCommissionCalculator {
 
 		// Setup based on the employee type type value of commissions that
 		// should be paid out.
-		if (this.employeeExperience == iCommissionCalculator.PROBATIONARY) {
+		if(this.employeeExperience == iCommissionCalculator.PROBATIONARY) {
 			bonusCommissionRate = BONUS_COMMISSION_FOR_PROBATIONARY_EMPLOYEE_RATE;
 			minimumSalesForBonusCommission = MINIMUM_PROBATIONARY_SALES_FOR_BONUS_COMMISSION;
-		} else if (this.employeeExperience == iCommissionCalculator.EXPERIENCED) {
+		} else if(this.employeeExperience == iCommissionCalculator.EXPERIENCED) {
 			bonusCommissionRate = BONUS_COMMISSION_FOR_EXPERIENCED_EMPLOYEE_RATE;
 			minimumSalesForBonusCommission = MINIMUM_EXPERIENCED_SALES_FOR_BONUS_COMMISSION;
 		} else {
@@ -163,20 +156,20 @@ public class CommissionCalculator implements iCommissionCalculator {
 		double bonusCommission = 0.00;
 
 		// Iterate over all transactions.
-		for (SalesTransaction s : this.transactions) {
+		for(SalesTransaction s : this.transactions) {
 			// If we have already met the threshold for sales, simply add the
 			// commission in.
-			if (netSales >= minimumSalesForBonusCommission) {
+			if(netSales >= minimumSalesForBonusCommission) {
 				netSales += s.getTransactionAmount();
 				bonusCommission += s.getTransactionAmount()
 						* bonusCommissionRate;
-			} else if ((netSales + s.getTransactionAmount()) >= minimumSalesForBonusCommission) {
+			} else if((netSales + s.getTransactionAmount()) >= minimumSalesForBonusCommission) {
 				// We need to determine how much of this sale qualifies for
 				// commission.
 				double commissionableAmount = (netSales + s
 						.getTransactionAmount())
 						- minimumSalesForBonusCommission;
-				
+
 				bonusCommission += commissionableAmount * bonusCommissionRate;
 			} else {
 				// No commission. Simply go on.
@@ -190,13 +183,12 @@ public class CommissionCalculator implements iCommissionCalculator {
 	@Override
 	public double getMinimumSales() {
 		double retVal = 0;
-		if (this.employeeExperience == iCommissionCalculator.PROBATIONARY) {
+		if(this.employeeExperience == iCommissionCalculator.PROBATIONARY) {
 			retVal = CommissionCalculator.MINIMUM_PROBATIONARY_SALES_FOR_COMMISSION;
-		} else if (this.employeeExperience == iCommissionCalculator.EXPERIENCED) {
+		} else if(this.employeeExperience == iCommissionCalculator.EXPERIENCED) {
 			retVal = CommissionCalculator.MINIMUM_EXPERIENCED_SALES_FOR_COMMISSION;
 		} else {
 			retVal = 0.00;
-
 		}
 		return retVal;
 	}
@@ -205,5 +197,4 @@ public class CommissionCalculator implements iCommissionCalculator {
 	public String getName() {
 		return this.employeeName;
 	}
-
 }
