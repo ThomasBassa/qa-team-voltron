@@ -20,7 +20,8 @@ to the build path of the Eclipse project. The existing projects are already
 handled by the `.classpath` file.
 
 ## Importing Issues into Eclipse
-This section to be taken care of in Mini Project 3...
+See [the README for Mini Project 3.]
+(https://github.com/ThomasBassa/qa-team-voltron/blob/master/Mini%20Project%2003/README.md)
 
 ## Useful Eclipse Plugins
 - [EclEmma](http://www.eclemma.org/) (Code coverage):
