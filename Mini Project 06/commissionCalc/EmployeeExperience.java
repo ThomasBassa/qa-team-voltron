@@ -33,12 +33,9 @@ public enum EmployeeExperience {
 	public double getMinBonusSales() {
 		return minBonusSales;
 	}
-
 	
 	/** @return the bonus commission rate earned after reaching the sales needed for a bonus */
 	public double getBonusCommissionRate() {
 		return bonusCommissionRate;
 	}
-	
-	
 }

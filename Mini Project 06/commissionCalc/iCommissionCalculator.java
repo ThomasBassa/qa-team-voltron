@@ -19,45 +19,33 @@ public interface iCommissionCalculator {
 	This also fixes the typo for replacement items & the duplicate value for replacement/consulting */
 
 	/** This method will obtain the name of the salesman and return it for analysis.
-	 * @return The name of the salesman will be returned. */
+	 * @return the name of the salesman */
 	public abstract String getName();
 
 	/** This method will add a sale to the list of items that have been sold for the given month.
 	 * @param salesType This is the type of sale, as defined in the SaleType enum.
-	 * @param dollarAmount This is the amount of the sale in dollars.
-	 */
+	 * @param dollarAmount This is the amount of the sale in dollars. */
 	public abstract void addSale(SaleType salesType, double dollarAmount);
 
-	/** This method will obtain the total sales for the salesman for the month.
-	 * @return
-	 */
+	/** This method will obtain the total sales for the salesman for the month. */
 	public abstract double getTotalSales();
 
-	/**
-	 * This method will set the employee experience.
+	/** This method will set the employee experience.
 	 * @param employeeExperience A constant from the {@link EmployeeExperience}
-	 * enum-- PROBATIONARY or EXPERIENCED.
-	 */
+	 * enum-- PROBATIONARY or EXPERIENCED. */
 	//TRB public abstract void setEmployeeExperience(int employeeExperience);
 	public abstract void setEmployeeExperience(EmployeeExperience employeeExperience);
 	//TRB Replace with enum use.
 
-
-	/**
-	 * This method will calculate the commission based upon the sales that have occurred.
-	 * @return The total commission will be returned based on the commission formula.
-	 */
+	/** This method will calculate the commission based upon the sales that have occurred.
+	 * @return The total commission will be returned based on the commission formula. */
 	public abstract double calculateCommission();
 
-	/**
-	 * This method will calculate and return the bonus commission for the given salesman.
-	 * @return The bonus commission will be returned.
-	 */
+	/** This method will calculate and return the bonus commission for the given salesman.
+	 * @return The bonus commission will be returned. */
 	public abstract double calculateBonusCommission();
 
-	/**
-	 * This method will return the minimum sales that are necessary before a commission will be paid.
-	 * @return The minimum sales before a commission will be returned.
-	 */
+	/** This method will return the minimum sales that are necessary before a commission will be paid.
+	 * @return The minimum sales before a commission will be returned. */
 	public abstract double getMinimumSales();
 }
