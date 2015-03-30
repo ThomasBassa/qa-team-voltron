@@ -408,8 +408,8 @@ public class CommissionCalculatorTester {
 		//Try valid cases for sales type and amount
 		try {
 			transaction = new SalesTransaction(SaleType.BASIC_ITEM,1.0);
-			transaction.getTransactionType();
-			transaction.getTransactionAmount();
+			assertEquals(SaleType.BASIC_ITEM,transaction.getTransactionType());
+			assertEquals(1.0,transaction.getTransactionAmount(), DELTA_MONEY);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -417,8 +417,8 @@ public class CommissionCalculatorTester {
 		
 		try {
 			transaction = new SalesTransaction(SaleType.BASIC_ITEM,10.0);
-			transaction.getTransactionType();
-			transaction.getTransactionAmount();
+			assertEquals(SaleType.BASIC_ITEM,transaction.getTransactionType());
+			assertEquals(10.0,transaction.getTransactionAmount(), DELTA_MONEY);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -426,8 +426,8 @@ public class CommissionCalculatorTester {
 		
 		try {
 			transaction = new SalesTransaction(SaleType.BASIC_ITEM,Double.MAX_VALUE);
-			transaction.getTransactionType();
-			transaction.getTransactionAmount();
+			assertEquals(SaleType.BASIC_ITEM,transaction.getTransactionType());
+			assertEquals(Double.MAX_VALUE,transaction.getTransactionAmount(), DELTA_MONEY);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -435,8 +435,8 @@ public class CommissionCalculatorTester {
 		
 		try {
 			transaction = new SalesTransaction(SaleType.REPLACEMENT_ITEM,1.0);
-			transaction.getTransactionType();
-			transaction.getTransactionAmount();
+			assertEquals(SaleType.REPLACEMENT_ITEM,transaction.getTransactionType());
+			assertEquals(1.0,transaction.getTransactionAmount(), DELTA_MONEY);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -444,8 +444,8 @@ public class CommissionCalculatorTester {
 		
 		try {
 			transaction = new SalesTransaction(SaleType.REPLACEMENT_ITEM,10.0);
-			transaction.getTransactionType();
-			transaction.getTransactionAmount();
+			assertEquals(SaleType.REPLACEMENT_ITEM,transaction.getTransactionType());
+			assertEquals(10.0,transaction.getTransactionAmount(), DELTA_MONEY);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -453,8 +453,8 @@ public class CommissionCalculatorTester {
 		
 		try {
 			transaction = new SalesTransaction(SaleType.REPLACEMENT_ITEM,Double.MAX_VALUE);
-			transaction.getTransactionType();
-			transaction.getTransactionAmount();
+			assertEquals(SaleType.REPLACEMENT_ITEM,transaction.getTransactionType());
+			assertEquals(Double.MAX_VALUE,transaction.getTransactionAmount(), DELTA_MONEY);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -462,8 +462,8 @@ public class CommissionCalculatorTester {
 		
 		try {
 			transaction = new SalesTransaction(SaleType.CONSULTING_ITEM,1.0);
-			transaction.getTransactionType();
-			transaction.getTransactionAmount();
+			assertEquals(SaleType.CONSULTING_ITEM,transaction.getTransactionType());
+			assertEquals(1.0,transaction.getTransactionAmount(), DELTA_MONEY);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -471,8 +471,8 @@ public class CommissionCalculatorTester {
 		
 		try {
 			transaction = new SalesTransaction(SaleType.CONSULTING_ITEM,10.0);
-			transaction.getTransactionType();
-			transaction.getTransactionAmount();
+			assertEquals(SaleType.CONSULTING_ITEM,transaction.getTransactionType());
+			assertEquals(10.0,transaction.getTransactionAmount(), DELTA_MONEY);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -480,8 +480,8 @@ public class CommissionCalculatorTester {
 		
 		try {
 			transaction = new SalesTransaction(SaleType.CONSULTING_ITEM,Double.MAX_VALUE);
-			transaction.getTransactionType();
-			transaction.getTransactionAmount();
+			assertEquals(SaleType.CONSULTING_ITEM,transaction.getTransactionType());
+			assertEquals(Double.MAX_VALUE,transaction.getTransactionAmount(), DELTA_MONEY);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -489,8 +489,8 @@ public class CommissionCalculatorTester {
 		
 		try {
 			transaction = new SalesTransaction(SaleType.MAINTENANCE_ITEM,1.0);
-			transaction.getTransactionType();
-			transaction.getTransactionAmount();
+			assertEquals(SaleType.MAINTENANCE_ITEM,transaction.getTransactionType());
+			assertEquals(1.0,transaction.getTransactionAmount(), DELTA_MONEY);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -498,8 +498,8 @@ public class CommissionCalculatorTester {
 		
 		try {
 			transaction = new SalesTransaction(SaleType.MAINTENANCE_ITEM,10.0);
-			transaction.getTransactionType();
-			transaction.getTransactionAmount();
+			assertEquals(SaleType.MAINTENANCE_ITEM,transaction.getTransactionType());
+			assertEquals(10.0,transaction.getTransactionAmount(), DELTA_MONEY);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -507,8 +507,8 @@ public class CommissionCalculatorTester {
 		
 		try {
 			transaction = new SalesTransaction(SaleType.MAINTENANCE_ITEM,Double.MAX_VALUE);
-			transaction.getTransactionType();
-			transaction.getTransactionAmount();
+			assertEquals(SaleType.MAINTENANCE_ITEM,transaction.getTransactionType());
+			assertEquals(Double.MAX_VALUE,transaction.getTransactionAmount(), DELTA_MONEY);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
