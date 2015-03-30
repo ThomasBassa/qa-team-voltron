@@ -433,14 +433,94 @@ public class CommissionCalculatorTester {
 			e.printStackTrace();
 		}
 		
+		try {
+			transaction = new SalesTransaction(SaleType.REPLACEMENT_ITEM,1.0);
+			transaction.getTransactionType();
+			transaction.getTransactionAmount();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			transaction = new SalesTransaction(SaleType.REPLACEMENT_ITEM,10.0);
+			transaction.getTransactionType();
+			transaction.getTransactionAmount();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			transaction = new SalesTransaction(SaleType.REPLACEMENT_ITEM,Double.MAX_VALUE);
+			transaction.getTransactionType();
+			transaction.getTransactionAmount();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			transaction = new SalesTransaction(SaleType.CONSULTING_ITEM,1.0);
+			transaction.getTransactionType();
+			transaction.getTransactionAmount();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			transaction = new SalesTransaction(SaleType.CONSULTING_ITEM,10.0);
+			transaction.getTransactionType();
+			transaction.getTransactionAmount();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			transaction = new SalesTransaction(SaleType.CONSULTING_ITEM,Double.MAX_VALUE);
+			transaction.getTransactionType();
+			transaction.getTransactionAmount();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			transaction = new SalesTransaction(SaleType.MAINTENANCE_ITEM,1.0);
+			transaction.getTransactionType();
+			transaction.getTransactionAmount();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			transaction = new SalesTransaction(SaleType.MAINTENANCE_ITEM,10.0);
+			transaction.getTransactionType();
+			transaction.getTransactionAmount();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			transaction = new SalesTransaction(SaleType.MAINTENANCE_ITEM,Double.MAX_VALUE);
+			transaction.getTransactionType();
+			transaction.getTransactionAmount();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		//Try invalid cases for sales type and amount. All below should fail because amount is negative
 		try {
 			transaction = new SalesTransaction(SaleType.BASIC_ITEM,-1.0);
 			transaction.getTransactionType();
 			transaction.getTransactionAmount();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// PASS
 		}
 		
 		try {
@@ -448,8 +528,7 @@ public class CommissionCalculatorTester {
 			transaction.getTransactionType();
 			transaction.getTransactionAmount();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// PASS
 		}
 		
 		try {
@@ -457,11 +536,81 @@ public class CommissionCalculatorTester {
 			transaction.getTransactionType();
 			transaction.getTransactionAmount();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// PASS
 			
 		}
 		
+		try {
+			transaction = new SalesTransaction(SaleType.REPLACEMENT_ITEM,-1.0);
+			transaction.getTransactionType();
+			transaction.getTransactionAmount();
+		} catch (Exception e) {
+			// PASS
+		}
+		
+		try {
+			transaction = new SalesTransaction(SaleType.REPLACEMENT_ITEM,-10.0);
+			transaction.getTransactionType();
+			transaction.getTransactionAmount();
+		} catch (Exception e) {
+			// PASS
+		}
+		
+		try {
+			transaction = new SalesTransaction(SaleType.REPLACEMENT_ITEM,-Double.MAX_VALUE);
+			transaction.getTransactionType();
+			transaction.getTransactionAmount();
+		} catch (Exception e) {
+			// PASS
+		}
+		
+		try {
+			transaction = new SalesTransaction(SaleType.CONSULTING_ITEM,-1.0);
+			transaction.getTransactionType();
+			transaction.getTransactionAmount();
+		} catch (Exception e) {
+			// PASS
+		}
+		
+		try {
+			transaction = new SalesTransaction(SaleType.CONSULTING_ITEM,-10.0);
+			transaction.getTransactionType();
+			transaction.getTransactionAmount();
+		} catch (Exception e) {
+			// PASS
+		}
+		
+		try {
+			transaction = new SalesTransaction(SaleType.CONSULTING_ITEM,-Double.MAX_VALUE);
+			transaction.getTransactionType();
+			transaction.getTransactionAmount();
+		} catch (Exception e) {
+			// PASS
+		}
+		
+		try {
+			transaction = new SalesTransaction(SaleType.MAINTENANCE_ITEM,-1.0);
+			transaction.getTransactionType();
+			transaction.getTransactionAmount();
+		} catch (Exception e) {
+			// PASS
+		}
+		
+		try {
+			transaction = new SalesTransaction(SaleType.MAINTENANCE_ITEM,-10.0);
+			transaction.getTransactionType();
+			transaction.getTransactionAmount();
+		} catch (Exception e) {
+			// PASS
+		}
+		
+		try {
+			transaction = new SalesTransaction(SaleType.MAINTENANCE_ITEM,-Double.MAX_VALUE);
+			transaction.getTransactionType();
+			transaction.getTransactionAmount();
+		} catch (Exception e) {
+			// PASS
+		}
 	}
 	
 	
