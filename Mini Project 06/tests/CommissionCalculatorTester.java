@@ -393,4 +393,76 @@ public class CommissionCalculatorTester {
 		calcProbationary.addSale(SaleType.CONSULTING_ITEM, 1.00);
 		assertEquals(calcProbationary.getTotalSales(), 4.04, 0.001);
 	}
+	
+	/** Test the functionality of getTransactionType and getTransactionAmount.
+	 * This function should return the sale type and amount given in the constructor.
+	 * Because the sale types are already defined as enums, getTransactionType will 
+	 * always pass. getTransactionAmount will fail if double value entered is negative.
+	 * 
+	 * @author Umar Idris 
+	 * @throws Exception */
+	@Test
+	public void testGetTransactionTypeAndAmount() {
+		
+		SalesTransaction transaction;
+		//Try valid cases for sales type and amount
+		try {
+			transaction = new SalesTransaction(SaleType.BASIC_ITEM,1.0);
+			transaction.getTransactionType();
+			transaction.getTransactionAmount();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			transaction = new SalesTransaction(SaleType.BASIC_ITEM,10.0);
+			transaction.getTransactionType();
+			transaction.getTransactionAmount();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			transaction = new SalesTransaction(SaleType.BASIC_ITEM,Double.MAX_VALUE);
+			transaction.getTransactionType();
+			transaction.getTransactionAmount();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//Try invalid cases for sales type and amount. All below should fail because amount is negative
+		try {
+			transaction = new SalesTransaction(SaleType.BASIC_ITEM,-1.0);
+			transaction.getTransactionType();
+			transaction.getTransactionAmount();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			transaction = new SalesTransaction(SaleType.BASIC_ITEM,-10.0);
+			transaction.getTransactionType();
+			transaction.getTransactionAmount();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			transaction = new SalesTransaction(SaleType.BASIC_ITEM,-Double.MAX_VALUE);
+			transaction.getTransactionType();
+			transaction.getTransactionAmount();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		}
+		
+	}
+	
+	
 }
