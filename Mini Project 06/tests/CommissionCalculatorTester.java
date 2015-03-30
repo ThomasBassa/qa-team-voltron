@@ -187,32 +187,32 @@ public class CommissionCalculatorTester {
 		calcProbationary.addSale(SaleType.CONSULTING_ITEM, 2000);
 		calcExperienced.addSale(SaleType.CONSULTING_ITEM, 5000);
 
-		assertEquals(0.0, calcProbationary.calculateCommission(), DELTA_MONEY);
-		assertEquals(0.0, calcExperienced.calculateCommission(), DELTA_MONEY);
+		assertEquals(60.0, calcProbationary.calculateCommission(), DELTA_MONEY);
+		assertEquals(400.0, calcExperienced.calculateCommission(), DELTA_MONEY);
 
 		//testing 1 cent past the lower bounds
 		calcProbationary.addSale(SaleType.CONSULTING_ITEM, 2000.01);
 		calcExperienced.addSale(SaleType.CONSULTING_ITEM, 5000.01);
 
-		assertEquals(60.00, calcProbationary.calculateCommission(), DELTA_MONEY);
-		assertEquals(400.00, calcExperienced.calculateCommission(), DELTA_MONEY);
+		assertEquals(120.00, calcProbationary.calculateCommission(), DELTA_MONEY);
+		assertEquals(800.00, calcExperienced.calculateCommission(), DELTA_MONEY);
 
 
 		//testing 1 dollar pass the lower bounds
 		calcProbationary.addSale(SaleType.CONSULTING_ITEM, 2001);
 		calcExperienced.addSale(SaleType.CONSULTING_ITEM, 5001);
 
-		assertEquals(120.03, calcProbationary.calculateCommission(),
+		assertEquals(180.03, calcProbationary.calculateCommission(),
 				DELTA_MONEY);
-		assertEquals(800.08, calcExperienced.calculateCommission(), DELTA_MONEY);
+		assertEquals(1200.08, calcExperienced.calculateCommission(), DELTA_MONEY);
 
 		//testing a random sales number since there is no upper bounds 
 		calcProbationary.addSale(SaleType.CONSULTING_ITEM, 1000000);
 		calcExperienced.addSale(SaleType.CONSULTING_ITEM, 1000000);
 
-		assertEquals(30120.03, calcProbationary.calculateCommission(),
+		assertEquals(30180.03, calcProbationary.calculateCommission(),
 				DELTA_MONEY);
-		assertEquals(80800.08, calcExperienced.calculateCommission(),
+		assertEquals(81200.08, calcExperienced.calculateCommission(),
 				DELTA_MONEY);
 	}
 
@@ -242,36 +242,36 @@ public class CommissionCalculatorTester {
 		calcProbationary.addSale(SaleType.CONSULTING_ITEM, 50000);
 		calcExperienced.addSale(SaleType.CONSULTING_ITEM, 100000);
 
-		assertEquals(0.0, calcProbationary.calculateBonusCommission(),
+		assertEquals(250.0, calcProbationary.calculateBonusCommission(),
 				DELTA_MONEY);
-		assertEquals(0.0, calcExperienced.calculateBonusCommission(),
+		assertEquals(1500.0, calcExperienced.calculateBonusCommission(),
 				DELTA_MONEY);
 
 		//test 1 cent past the lower bounds
 		calcProbationary.addSale(SaleType.CONSULTING_ITEM, 50000.01);
 		calcExperienced.addSale(SaleType.CONSULTING_ITEM, 100000.01);
 
-		assertEquals(0.00, calcProbationary.calculateBonusCommission(),
+		assertEquals(500.00, calcProbationary.calculateBonusCommission(),
 				DELTA_MONEY);
-		assertEquals(0.00, calcExperienced.calculateBonusCommission(),
+		assertEquals(3000.00, calcExperienced.calculateBonusCommission(),
 				DELTA_MONEY);
 
 		//test 1 dollar past the lower bounds
 		calcProbationary.addSale(SaleType.CONSULTING_ITEM, 50001);
 		calcExperienced.addSale(SaleType.CONSULTING_ITEM, 100001);
 
-		assertEquals(0.01, calcProbationary.calculateBonusCommission(),
+		assertEquals(750.01, calcProbationary.calculateBonusCommission(),
 				DELTA_MONEY);
-		assertEquals(0.01, calcExperienced.calculateBonusCommission(),
+		assertEquals(4500.01, calcExperienced.calculateBonusCommission(),
 				DELTA_MONEY);
 
 		//test a larger number since there is no upper bounds
 		calcProbationary.addSale(SaleType.CONSULTING_ITEM, 100000000);
 		calcExperienced.addSale(SaleType.CONSULTING_ITEM, 100000000);
 
-		assertEquals(499750.01, calcProbationary.calculateBonusCommission(),
+		assertEquals(500750.01, calcProbationary.calculateBonusCommission(),
 				DELTA_MONEY);
-		assertEquals(1498500.02, calcExperienced.calculateBonusCommission(),
+		assertEquals(1504500.02, calcExperienced.calculateBonusCommission(),
 				DELTA_MONEY);
 
 	}
