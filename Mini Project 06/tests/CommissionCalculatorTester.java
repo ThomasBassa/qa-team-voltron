@@ -23,6 +23,7 @@ public class CommissionCalculatorTester {
 
 	/** A CommissionCalculator for an experienced employee. Initialized in setUp. */
 	private CommissionCalculator calcExperienced;
+	
 
 	/** Monetary values should be accurate to the cent. */
 	public static final double DELTA_MONEY = 0.01; //TODO Should this be 0.005?
@@ -113,5 +114,148 @@ public class CommissionCalculatorTester {
 				//Pass
 			}
 		}
+	}
+	
+	/** Test the setEmployeeExperience method
+	 *  This is most possibilities that can happen,
+	 *  and since the only two choices are EXPERIENCED
+	 *  or PROBATIONARY there is no need to test invalid 
+	 *  values
+	 *  @author Michael Philotoff 
+	 */
+	@Test
+	public void testsetEmployeeExperience() {
+		
+		//test setting from PROBATIONARY to EXPERIENCED
+		try{
+				calcProbationary.setEmployeeExperience(EmployeeExperience.EXPERIENCED);		
+			} catch(Exception e){
+				System.out.println(e);
+				//fails
+			}
+		
+		//test setting from EXPERIENCED to PROBATIONARY		
+		try{			
+				calcProbationary.setEmployeeExperience(EmployeeExperience.PROBATIONARY);			
+			} catch(Exception e){
+				System.out.println(e);
+				//fails
+			}
+		
+		//test setting from EXPERIENCED to EXPERIENCED		
+		try{		
+			calcExperienced.setEmployeeExperience(EmployeeExperience.EXPERIENCED);	
+		} catch(Exception e){
+			System.out.println(e);
+			//fails
+		}
+		
+		//test setting from PROBATIONARY to PROBATIONARY
+		try{			
+			calcProbationary.setEmployeeExperience(EmployeeExperience.PROBATIONARY);	
+		} catch(Exception e){
+			System.out.println(e);
+			//fails
+		}
+	}
+	
+	/** Test the setcalculateCommission method
+	 *  This test the lower bounds of it the area around
+	 *  the lower bounds and a random larger number
+	 *  @author Michael Philotoff 
+	 */
+	@Test
+	public void testcalculateCommission() {
+		
+		//testing of calculateCommission when sale number of sales equals null
+		assertEquals(0.0,calcProbationary.calculateCommission(),DELTA_MONEY);
+		assertEquals(0.0,calcExperienced.calculateCommission(),DELTA_MONEY);
+		
+		//test 1 cent below the lower bound value
+		calcProbationary.addSale(SaleType.CONSULTING_ITEM, 1999.99);
+		calcExperienced.addSale(SaleType.CONSULTING_ITEM, 4999.99);
+		
+		assertEquals(0.0,calcProbationary.calculateBonusCommission(),DELTA_MONEY);
+		assertEquals(0.0,calcExperienced.calculateBonusCommission(),DELTA_MONEY);
+		
+		//testing the lower bounds
+		calcProbationary.addSale(SaleType.CONSULTING_ITEM, 2000);
+		calcExperienced.addSale(SaleType.CONSULTING_ITEM, 5000);
+		
+		assertEquals(0.0,calcProbationary.calculateCommission(),DELTA_MONEY);
+		assertEquals(0.0,calcExperienced.calculateCommission(),DELTA_MONEY);
+		
+		//testing 1 cent past the lower bounds
+		calcProbationary.addSale(SaleType.CONSULTING_ITEM, 2000.01);
+		calcExperienced.addSale(SaleType.CONSULTING_ITEM, 5000.01);
+		
+		assertEquals(60.00,calcProbationary.calculateCommission(),DELTA_MONEY);
+		assertEquals(400.00,calcExperienced.calculateCommission(),DELTA_MONEY);
+		
+		
+		//testing 1 dollar pass the lower bounds
+		calcProbationary.addSale(SaleType.CONSULTING_ITEM, 2001);
+		calcExperienced.addSale(SaleType.CONSULTING_ITEM, 5001);
+		
+		assertEquals(120.03,calcProbationary.calculateCommission(),DELTA_MONEY);
+		assertEquals(800.08,calcExperienced.calculateCommission(),DELTA_MONEY);
+		
+		//testing a random sales number since there is no upper bounds 
+		calcProbationary.addSale(SaleType.CONSULTING_ITEM, 1000000);
+		calcExperienced.addSale(SaleType.CONSULTING_ITEM, 1000000);
+		
+		assertEquals(30120.03,calcProbationary.calculateCommission(),DELTA_MONEY);
+		assertEquals(80800.08,calcExperienced.calculateCommission(),DELTA_MONEY);
+
+
+	}
+	
+	/** Test the setcalculateBonusCommission method
+	 *  This test the lower bounds of it the area around
+	 *  the lower bounds and a random larger number
+	 *  @author Michael Philotoff 
+	 */
+	@Test
+	public void testcalculateBonusCommissions() {
+		
+		//test when null
+		assertEquals(0.0,calcProbationary.calculateBonusCommission(),DELTA_MONEY);
+		assertEquals(0.0,calcExperienced.calculateBonusCommission(),DELTA_MONEY);
+		
+		//test 1 cent below the lower bound value
+		calcProbationary.addSale(SaleType.CONSULTING_ITEM, 49999.99);
+		calcExperienced.addSale(SaleType.CONSULTING_ITEM, 99999.99);
+		
+		assertEquals(0.0,calcProbationary.calculateBonusCommission(),DELTA_MONEY);
+		assertEquals(0.0,calcExperienced.calculateBonusCommission(),DELTA_MONEY);
+		
+		//test the lower bound value
+		calcProbationary.addSale(SaleType.CONSULTING_ITEM, 50000);
+		calcExperienced.addSale(SaleType.CONSULTING_ITEM, 100000);
+		
+		assertEquals(0.0,calcProbationary.calculateBonusCommission(),DELTA_MONEY);
+		assertEquals(0.0,calcExperienced.calculateBonusCommission(),DELTA_MONEY);
+		
+		//test 1 cent past the lower bounds
+		calcProbationary.addSale(SaleType.CONSULTING_ITEM, 50000.01);
+		calcExperienced.addSale(SaleType.CONSULTING_ITEM, 100000.01);
+		
+		assertEquals(0.00,calcProbationary.calculateBonusCommission(),DELTA_MONEY);
+		assertEquals(0.00,calcExperienced.calculateBonusCommission(),DELTA_MONEY);
+		
+		//test 1 dollar past the lower bounds
+		calcProbationary.addSale(SaleType.CONSULTING_ITEM, 50001);
+		calcExperienced.addSale(SaleType.CONSULTING_ITEM, 100001);
+		
+		assertEquals(0.01,calcProbationary.calculateBonusCommission(),DELTA_MONEY);
+		assertEquals(0.01,calcExperienced.calculateBonusCommission(),DELTA_MONEY);
+		
+		//test a larger number since there is no upper bounds
+		calcProbationary.addSale(SaleType.CONSULTING_ITEM, 100000000);
+		calcExperienced.addSale(SaleType.CONSULTING_ITEM, 100000000);
+		
+		assertEquals(499750.01,calcProbationary.calculateBonusCommission(),DELTA_MONEY);
+		assertEquals(1498500.02,calcExperienced.calculateBonusCommission(),DELTA_MONEY);
+
 	}
 }
