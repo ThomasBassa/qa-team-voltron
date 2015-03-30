@@ -131,8 +131,8 @@ public class CommissionCalculatorTester {
 			calcProbationary
 					.setEmployeeExperience(EmployeeExperience.EXPERIENCED);
 		} catch (Exception e) {
-			System.out.println(e);
-			//fails
+			e.printStackTrace();
+			fail("Valid employee experience set failed.");
 		}
 
 		//test setting from EXPERIENCED to PROBATIONARY		
@@ -140,8 +140,8 @@ public class CommissionCalculatorTester {
 			calcProbationary
 					.setEmployeeExperience(EmployeeExperience.PROBATIONARY);
 		} catch (Exception e) {
-			System.out.println(e);
-			//fails
+			e.printStackTrace();
+			fail("Valid employee experience set failed.");
 		}
 
 		//test setting from EXPERIENCED to EXPERIENCED		
@@ -149,8 +149,8 @@ public class CommissionCalculatorTester {
 			calcExperienced
 					.setEmployeeExperience(EmployeeExperience.EXPERIENCED);
 		} catch (Exception e) {
-			System.out.println(e);
-			//fails
+			e.printStackTrace();
+			fail("Valid employee experience set failed.");
 		}
 
 		//test setting from PROBATIONARY to PROBATIONARY
@@ -158,12 +158,12 @@ public class CommissionCalculatorTester {
 			calcProbationary
 					.setEmployeeExperience(EmployeeExperience.PROBATIONARY);
 		} catch (Exception e) {
-			System.out.println(e);
-			//fails
+			e.printStackTrace();
+			fail("Valid employee experience set failed.");
 		}
 	}
 
-	/** Test the setcalculateCommission method
+	/** Test the setCalculateCommission method
 	 *  This test the lower bounds of it the area around
 	 *  the lower bounds and a random larger number
 	 *  @author Michael Philotoff */
@@ -298,7 +298,8 @@ public class CommissionCalculatorTester {
 				calculator = new CommissionCalculator(
 						"Z9000@#$%&#@#$aaaaaa@#$2!@#aaa", experience);
 			} catch (Exception e) {
-				fail("CommissionCalculator constructor threw an exception");
+				e.printStackTrace();
+				fail("CommissionCalculator constructor threw an exception.");
 			}
 		}
 
@@ -351,8 +352,6 @@ public class CommissionCalculatorTester {
 		assertEquals(calcProbationary.getTotalSales(), 4.04, 0.001);
 		calcProbationary.addSale(SaleType.CONSULTING_ITEM, -1000.00);
 		assertEquals(calcProbationary.getTotalSales(), 4.04, 0.001);
-
-
 	}
 
 	/** Test the functionality of getTotalSales.
