@@ -258,4 +258,123 @@ public class CommissionCalculatorTester {
 		assertEquals(1498500.02,calcExperienced.calculateBonusCommission(),DELTA_MONEY);
 
 	}
+	
+	/** Test the functionality of CommissionCalculator constructor.
+	 * This function should create a CommisionCalculator object
+	 * with given employee name and employee experience. This should 
+	 * work properly for all variants of experience and any string for
+	 * employee name.
+	 * @author Greg Carkin
+	 */
+	@Test
+	public void testCommissionCalculator(){
+		CommissionCalculator calculator;
+		
+		//test valid inputs
+		for(EmployeeExperience experience: EmployeeExperience.values()){
+			try{
+				calculator = new CommissionCalculator("a", experience);
+				calculator = new CommissionCalculator("0", experience);
+				calculator = new CommissionCalculator("", experience);
+				calculator = new CommissionCalculator("&", experience);
+				calculator = new CommissionCalculator("Z9a%", experience);
+				calculator = new CommissionCalculator("Z9000@#$%&#@#$aaaaaa@#$2!@#aaa", experience);
+			}catch (Exception e){
+				fail("CommissionCalculator constructor threw an exception");
+			}
+		}
+	
+	}
+	/** Test the functionality of addSale.
+	 * This function should work properly with any SaleType 
+	 * and any dollar value 0 or greater. 
+	 * @author Greg Carkin
+	 */
+	@Test
+	public void testAddSale(){
+		
+		//test valid inputs
+		
+		//test adding basic items
+		calcProbationary.addSale(SaleType.BASIC_ITEM, 0.00);
+		assertEquals(calcProbationary.getTotalSales(), 0.00, 0.001);
+		calcProbationary.addSale(SaleType.BASIC_ITEM, 0.01);
+		assertEquals(calcProbationary.getTotalSales(), 0.01, 0.001);
+		calcProbationary.addSale(SaleType.BASIC_ITEM, 1.00);
+		assertEquals(calcProbationary.getTotalSales(), 1.01, 0.001);
+		
+		//test adding maintenance items
+		calcProbationary.addSale(SaleType.MAINTENANCE_ITEM, 0.00);
+		assertEquals(calcProbationary.getTotalSales(), 1.01, 0.001);
+		calcProbationary.addSale(SaleType.MAINTENANCE_ITEM, 0.01);
+		assertEquals(calcProbationary.getTotalSales(), 1.02, 0.001);
+		calcProbationary.addSale(SaleType.MAINTENANCE_ITEM, 1.00);
+		assertEquals(calcProbationary.getTotalSales(), 2.02, 0.001);
+		
+		//test adding replacement items
+		calcProbationary.addSale(SaleType.REPLACEMENT_ITEM, 0.00);
+		assertEquals(calcProbationary.getTotalSales(), 2.02, 0.001);
+		calcProbationary.addSale(SaleType.REPLACEMENT_ITEM, 0.01);
+		assertEquals(calcProbationary.getTotalSales(), 2.03, 0.001);
+		calcProbationary.addSale(SaleType.REPLACEMENT_ITEM, 1.00);
+		assertEquals(calcProbationary.getTotalSales(), 3.03, 0.001);
+		
+		//test adding consulting items
+		calcProbationary.addSale(SaleType.CONSULTING_ITEM, 0.00);
+		assertEquals(calcProbationary.getTotalSales(), 3.03, 0.001);
+		calcProbationary.addSale(SaleType.CONSULTING_ITEM, 0.01);
+		assertEquals(calcProbationary.getTotalSales(), 3.04, 0.001);
+		calcProbationary.addSale(SaleType.CONSULTING_ITEM, 1.00);
+		assertEquals(calcProbationary.getTotalSales(), 4.04, 0.001);
+		
+		
+		//test with negative sale
+		calcProbationary.addSale(SaleType.CONSULTING_ITEM, -0.01);
+		assertEquals(calcProbationary.getTotalSales(), 4.04, 0.001);
+		calcProbationary.addSale(SaleType.CONSULTING_ITEM, -1000.00);
+		assertEquals(calcProbationary.getTotalSales(), 4.04, 0.001);
+	
+		
+		
+	}
+	/** Test the functionality of getTotalSales.
+	 * This function should return a sum of all sales in transactions.
+	 * It should work properly for any sale accepted by addSale.
+	 * @author Greg Carkin
+	 */
+	@Test
+	public void testGetTotalSales(){
+		
+		//test adding basic items
+		calcProbationary.addSale(SaleType.BASIC_ITEM, 0.00);
+		assertEquals(calcProbationary.getTotalSales(), 0.00, 0.001);
+		calcProbationary.addSale(SaleType.BASIC_ITEM, 0.01);
+		assertEquals(calcProbationary.getTotalSales(), 0.01, 0.001);
+		calcProbationary.addSale(SaleType.BASIC_ITEM, 1.00);
+		assertEquals(calcProbationary.getTotalSales(), 1.01, 0.001);
+		
+		//test adding maintenance items
+		calcProbationary.addSale(SaleType.MAINTENANCE_ITEM, 0.00);
+		assertEquals(calcProbationary.getTotalSales(), 1.01, 0.001);
+		calcProbationary.addSale(SaleType.MAINTENANCE_ITEM, 0.01);
+		assertEquals(calcProbationary.getTotalSales(), 1.02, 0.001);
+		calcProbationary.addSale(SaleType.MAINTENANCE_ITEM, 1.00);
+		assertEquals(calcProbationary.getTotalSales(), 2.02, 0.001);
+		
+		//test adding replacement items
+		calcProbationary.addSale(SaleType.REPLACEMENT_ITEM, 0.00);
+		assertEquals(calcProbationary.getTotalSales(), 2.02, 0.001);
+		calcProbationary.addSale(SaleType.REPLACEMENT_ITEM, 0.01);
+		assertEquals(calcProbationary.getTotalSales(), 2.03, 0.001);
+		calcProbationary.addSale(SaleType.REPLACEMENT_ITEM, 1.00);
+		assertEquals(calcProbationary.getTotalSales(), 3.03, 0.001);
+		
+		//test adding consulting items
+		calcProbationary.addSale(SaleType.CONSULTING_ITEM, 0.00);
+		assertEquals(calcProbationary.getTotalSales(), 3.03, 0.001);
+		calcProbationary.addSale(SaleType.CONSULTING_ITEM, 0.01);
+		assertEquals(calcProbationary.getTotalSales(), 3.04, 0.001);
+		calcProbationary.addSale(SaleType.CONSULTING_ITEM, 1.00);
+		assertEquals(calcProbationary.getTotalSales(), 4.04, 0.001);
+	}
 }
