@@ -1,17 +1,12 @@
 package test;
 
 
-import static org.junit.Assert.*;
 import junit.framework.TestCase;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import application.TaxCalculatorInterface;
 import application.TaxCalculator;
+import application.TaxCalculatorInterface;
 
 
 public class TaxCalculatorTest extends TestCase {
@@ -739,9 +734,12 @@ public class TaxCalculatorTest extends TestCase {
 		int fStatus = 0;
 		int age = 30;
 
+		@SuppressWarnings("unused")
+		TaxCalculator tc;
+		
 		//test case where name is <= 0
 		try {
-			TaxCalculator t1 = new TaxCalculator(name, fStatus, age);
+			tc = new TaxCalculator(name, fStatus, age);
 		} catch (Exception e) {
 			//expected thrown exception name.lenth() <= 0
 		}
@@ -749,7 +747,7 @@ public class TaxCalculatorTest extends TestCase {
 		//test case where name does not have first and last names
 		name = "a";
 		try {
-			TaxCalculator t2 = new TaxCalculator(name, fStatus, age);
+			tc = new TaxCalculator(name, fStatus, age);
 		} catch (Exception e) {
 			//expected thrown exception does not have first and last name
 		}
@@ -757,7 +755,7 @@ public class TaxCalculatorTest extends TestCase {
 		//test case where name, fStatus, and age is correct
 		name = "a b";
 		try {
-			TaxCalculator t3 = new TaxCalculator(name, fStatus, age);
+			tc = new TaxCalculator(name, fStatus, age);
 		} catch (Exception e) {
 			//no expect exception to be thrown
 		}
@@ -765,7 +763,7 @@ public class TaxCalculatorTest extends TestCase {
 		//test case where filing status is for HEAD_OF_HOUSEHOLD
 		fStatus = -1;
 		try {
-			TaxCalculator t4 = new TaxCalculator(name, fStatus, age);
+			tc = new TaxCalculator(name, fStatus, age);
 		} catch (Exception e) {
 			//no exception expect to be thrown
 		}
@@ -773,7 +771,7 @@ public class TaxCalculatorTest extends TestCase {
 		//test case where filing status is incorrect type MARRIED_FILING_JOINTLY
 		fStatus = -2;
 		try {
-			TaxCalculator t3 = new TaxCalculator(name, fStatus, age);
+			tc = new TaxCalculator(name, fStatus, age);
 		} catch (Exception e) {
 			//expected thrown exception does not have correct filing status
 		}
@@ -781,7 +779,7 @@ public class TaxCalculatorTest extends TestCase {
 		//test case where filing status is for QUALIFYING_WIDOW
 		fStatus = -4;
 		try {
-			TaxCalculator t5 = new TaxCalculator(name, fStatus, age);
+			tc = new TaxCalculator(name, fStatus, age);
 		} catch (Exception e) {
 			//no exception expected to be thrown
 		}
@@ -789,7 +787,7 @@ public class TaxCalculatorTest extends TestCase {
 		//test case where age is <= 0
 		age = 0;
 		try {
-			TaxCalculator t4 = new TaxCalculator(name, fStatus, age);
+			tc = new TaxCalculator(name, fStatus, age);
 		} catch (Exception e) {
 			//expected thrown exception age <= 0
 		}
