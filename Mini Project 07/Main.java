@@ -3,11 +3,8 @@ import SecurityLightController.LightControllerStateMachine;
 import SecurityLightController.LightTimer;
 import UI.SecurityLampSimulatedUI;
 
-/**
- * This is the main class. It instantiates instances of the GUI and ties it
- * together with the state machine.
- * 
- */
+/** This is the main class. It instantiates instances of the GUI and ties it
+ * together with the state machine. */
 public class Main {
 	public static void main(String[] args) {
 

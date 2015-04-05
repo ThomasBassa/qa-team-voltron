@@ -14,28 +14,24 @@ import javax.swing.JPanel;
 import SecurityLightController.LightControllerCommandInterface;
 import SecurityLightController.LightDeviceInterface;
 
-/**
- * This class implements a basic UI for usage with the light controller. It
- * simulates that which would exist in a real world light timer implementation.
- * 
- */
-public class SecurityLampSimulatedUI extends JPanel implements
-		LightDeviceInterface {
+
+/** This class implements a basic UI for usage with the light controller. It simulates that
+ * which would exist in a real world light timer implementation. */
+public class SecurityLampSimulatedUI extends JPanel implements LightDeviceInterface {
 
 	private static final long serialVersionUID = 1L;
 
 	private JComboBox overrideSwitch;
+
 	private JComboBox lightSensor;
+
 	private JLabel lamp;
+
 	private LightControllerCommandInterface lcsm;
 
-	/**
-	 * This constructor will instantiate a new GUI instance.
-	 * 
-	 * @param lcsm
-	 *            This is the instance of the light controller state machine
-	 *            that is to be used.
-	 */
+	/** This constructor will instantiate a new GUI instance.
+	 * @param lcsm This is the instance of the light controller state machine that is to be
+	 *        used. */
 	public SecurityLampSimulatedUI(LightControllerCommandInterface lcsm) {
 		super();
 		this.lcsm = lcsm;
@@ -43,9 +39,7 @@ public class SecurityLampSimulatedUI extends JPanel implements
 		this.addContents();
 	}
 
-	/**
-	 * This method will add the contents to the given panel.
-	 */
+	/** This method will add the contents to the given panel. */
 	private void addContents() {
 		GridBagConstraints gbc = new GridBagConstraints();
 
@@ -65,21 +59,20 @@ public class SecurityLampSimulatedUI extends JPanel implements
 		gbc.gridheight = 1;
 		gbc.weightx = 0.5;
 		gbc.weighty = 0.0;
-		String[] switchPositions = { "Off", "On" };
+		String[] switchPositions = {"Off", "On"};
 		overrideSwitch = new JComboBox(switchPositions);
 		this.add(overrideSwitch, gbc);
 
 		overrideSwitch.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if (((String) overrideSwitch.getSelectedItem())
+				if(((String) overrideSwitch.getSelectedItem())
 						.equalsIgnoreCase("On")) {
-					lcsm
-							.signalAction(LightControllerCommandInterface.MANUAL_SWITCH_ON);
-				} else if (((String) overrideSwitch.getSelectedItem())
+					lcsm.signalAction(LightControllerCommandInterface.MANUAL_SWITCH_ON);
+				} else if(((String) overrideSwitch.getSelectedItem())
 						.equalsIgnoreCase("Off")) {
-					lcsm
-							.signalAction(LightControllerCommandInterface.MANUAL_SWITCH_OFF);
+					lcsm.signalAction(LightControllerCommandInterface.MANUAL_SWITCH_OFF);
 				}
 			}
 		});
@@ -100,21 +93,20 @@ public class SecurityLampSimulatedUI extends JPanel implements
 		gbc.gridheight = 1;
 		gbc.weightx = 0.5;
 		gbc.weighty = 0.5;
-		String[] sensorOptions = { "Light", "Dark" };
+		String[] sensorOptions = {"Light", "Dark"};
 		lightSensor = new JComboBox(sensorOptions);
 		this.add(lightSensor, gbc);
 
 		lightSensor.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if (((String) lightSensor.getSelectedItem())
+				if(((String) lightSensor.getSelectedItem())
 						.equalsIgnoreCase("Dark")) {
-					lcsm
-							.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_DARKENED);
-				} else if (((String) lightSensor.getSelectedItem())
+					lcsm.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_DARKENED);
+				} else if(((String) lightSensor.getSelectedItem())
 						.equalsIgnoreCase("Light")) {
-					lcsm
-							.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_LIGHTENED);
+					lcsm.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_LIGHTENED);
 				}
 			}
 		});
@@ -131,8 +123,7 @@ public class SecurityLampSimulatedUI extends JPanel implements
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				lcsm
-						.signalAction(LightControllerCommandInterface.MOTION_DETECTED);
+				lcsm.signalAction(LightControllerCommandInterface.MOTION_DETECTED);
 			}
 		});
 		this.add(motionDetectedButton, gbc);
@@ -144,8 +135,7 @@ public class SecurityLampSimulatedUI extends JPanel implements
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				lcsm
-						.signalAction(LightControllerCommandInterface.SECURITY_ALARM_TRIPPED);
+				lcsm.signalAction(LightControllerCommandInterface.SECURITY_ALARM_TRIPPED);
 			}
 		});
 		this.add(alarmTripped, gbc);
@@ -157,8 +147,7 @@ public class SecurityLampSimulatedUI extends JPanel implements
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				lcsm
-						.signalAction(LightControllerCommandInterface.ALARM_CLEARED);
+				lcsm.signalAction(LightControllerCommandInterface.ALARM_CLEARED);
 			}
 		});
 		this.add(cancelButton, gbc);
@@ -170,56 +159,38 @@ public class SecurityLampSimulatedUI extends JPanel implements
 		gbc.gridheight = 3;
 		gbc.weightx = 0.5;
 		gbc.weighty = 0.0;
-		this.lamp = new JLabel(this.createImageIcon("dark.gif",
-				"A darkened lamp"));
+		this.lamp = new JLabel(this.createImageIcon("dark.gif", "A darkened lamp"));
 		this.add(this.lamp, gbc);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see SecurityLightController.LightDeviceInterface#turnLightOff()
-	 */
+	/* (non-Javadoc)
+	 * @see SecurityLightController.LightDeviceInterface#turnLightOff() */
 	public void turnLightOff() {
 		this.lamp.setIcon(this.createImageIcon("dark.gif", "A darkened lamp"));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * SecurityLightController.LightDeviceInterface#turnLightOnFullBrightness()
-	 */
+	/* (non-Javadoc)
+	 * @see SecurityLightController.LightDeviceInterface#turnLightOnFullBrightness() */
 	public void turnLightOnFullBrightness() {
 		this.lamp.setIcon(this.createImageIcon("bright.gif", "A bright lamp"));
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * SecurityLightController.LightDeviceInterface#turnLightOnNightimeBrightness
-	 * ()
-	 */
+	/* (non-Javadoc)
+	 * @see SecurityLightController.LightDeviceInterface#turnLightOnNightimeBrightness () */
 	public void turnLightOnNightimeBrightness() {
 		this.lamp.setIcon(this.createImageIcon("dim.gif", "A dim lamp"));
 	}
 
-	/**
-	 * This method will create an image icon.
-	 * 
-	 * @param path
-	 *            This is the path to the icon.
-	 * @param description
-	 *            This is a description of the icon.
-	 * @return Returns an ImageIcon, or null if the path was invalid.
-	 */
+	/** This method will create an image icon.
+	 * @param path This is the path to the icon.
+	 * @param description This is a description of the icon.
+	 * @return Returns an ImageIcon, or null if the path was invalid. */
 	private ImageIcon createImageIcon(String path, String description) {
 		ClassLoader cldr = this.getClass().getClassLoader();
 		java.net.URL imageURL = cldr.getResource(path);
 
-		if (imageURL != null) {
+		if(imageURL != null) {
 			return new ImageIcon(imageURL, description);
 		} else {
 			System.err.println("Couldn't find file: " + path);
