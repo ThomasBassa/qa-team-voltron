@@ -288,7 +288,8 @@ public class LightControllerStateMachine implements
 		// Now determine if an actual state change has occured. If so, invoke
 		// the exit action on the given state as well as the entry action for
 		// the new state.
-		if(stateChange = true) {
+		//TRB if(stateChange = true) { //Accidentally did assignment, not comparison
+		if(stateChange) {
 			// Invoke exit actions.
 			handleExitConditions(presentState);
 
