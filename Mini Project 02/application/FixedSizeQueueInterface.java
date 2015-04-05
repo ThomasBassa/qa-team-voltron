@@ -14,7 +14,7 @@ public interface FixedSizeQueueInterface<E> extends Queue<E> {
 	 */
 	
 	/* Methods inherited from Collection<E>
-	 * TODO note methods from Collection
+	 * Hmm, note methods from Collection
 	 */
 	
 	/**
