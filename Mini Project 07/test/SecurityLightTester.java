@@ -2,6 +2,8 @@ package test;
 
 import static org.junit.Assert.*;
 
+import javax.swing.JFrame;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,19 +24,20 @@ public class SecurityLightTester {
 	 * actually observe the changes in the state machine. This is an inner class found at
 	 * the end of this test suite. */
 	private LightStateObserver obs;
-	
-	/** An implementation of the light device interface, seen in an inner class at
-	 * the end of this suite. */
+
+	/** An implementation of the light device interface, seen in an inner class at the end
+	 * of this suite. */
 	private Lamp lamp;
 
-	/** Used to create a brand new state machine, observer, and light before executing any test..
+	/** Used to create a brand new state machine, observer, and light before executing any
+	 * test..
 	 * @throws Exception if something bad happens, hopefully not */
 	@Before
 	public void setUp() throws Exception {
 		light = new LightControllerStateMachine();
 		obs = new LightStateObserver();
 		lamp = new Lamp();
-		
+
 		light.setLight(lamp);
 		light.setTmr(new LightTimer(light));
 		light.subscribe(obs);
@@ -53,9 +56,126 @@ public class SecurityLightTester {
 		lamp.assertStateEquals(Lamp.LampState.OFF);
 	}
 
+
+	/** Test to check state transition from manual off to manual on
+	 * @author Greg */
+	@Test
+	public void testManuallight() {
+		light.signalAction(LightControllerCommandInterface.MANUAL_SWITCH_ON);
+		obs.assertStateEquals(2);
+
+		light.signalAction(LightControllerCommandInterface.MANUAL_SWITCH_OFF);
+		obs.assertStateEquals(1);
+	}
+
+
+	/** Test to check state transition from manual off to manual on to darkened back to
+	 * lightened
+	 * @author Greg */
+	@Test
+	public void testManualLightToDark() {
+		obs.assertStateEquals(1);
+
+		light.signalAction(LightControllerCommandInterface.MANUAL_SWITCH_ON);
+		obs.assertStateEquals(2);
+
+		light.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_DARKENED);
+		obs.assertStateEquals(8);
+
+		light.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_LIGHTENED);
+		obs.assertStateEquals(2);
+
+		light.signalAction(LightControllerCommandInterface.MANUAL_SWITCH_OFF);
+		obs.assertStateEquals(1);
+	}
+
+	/** Test to check state transition from day to night back to day
+	 * @author Greg */
+	@Test
+	public void testDayToNight() {
+		obs.assertStateEquals(1);
+
+		light.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_DARKENED);
+		obs.assertStateEquals(4);
+
+		light.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_LIGHTENED);
+		obs.assertStateEquals(1);
+	}
+
+	/** Test to check state transition from day to night then manual on, manual off back to
+	 * day
+	 * @author Greg */
+	@Test
+	public void testManualDayToNight() {
+		obs.assertStateEquals(1);
+
+		light.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_DARKENED);
+		obs.assertStateEquals(4);
+
+		light.signalAction(LightControllerCommandInterface.MANUAL_SWITCH_ON);
+		obs.assertStateEquals(8);
+
+		light.signalAction(LightControllerCommandInterface.MANUAL_SWITCH_OFF);
+		obs.assertStateEquals(4);
+
+		light.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_LIGHTENED);
+		obs.assertStateEquals(1);
+	}
+
+	/** Test to check state transition from day to night then alarm tripped then alarm is
+	 * cleared and goes back to night.
+	 * @author Greg */
+	@Test
+	public void testAlarm() {
+		obs.assertStateEquals(1);
+
+		light.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_DARKENED);
+		obs.assertStateEquals(4);
+
+		light.signalAction(LightControllerCommandInterface.SECURITY_ALARM_TRIPPED);
+		obs.assertStateEquals(32);
+
+		light.signalAction(LightControllerCommandInterface.LAMP_TIMER_EXPIRED);
+		obs.assertStateEquals(32);
+
+		light.signalAction(LightControllerCommandInterface.LAMP_TIMER_EXPIRED);
+		obs.assertStateEquals(32);
+
+		light.signalAction(LightControllerCommandInterface.ALARM_CLEARED);
+		obs.assertStateEquals(4);
+
+	}
+
+	/** Test to check state transition from day to night then motion is detected. Light
+	 * timer expires then motion is detected again. The security alarm is tripped then the
+	 * alarm is cleared.
+	 * @author Greg */
+	@Test
+	public void testMotionDetected() {
+		obs.assertStateEquals(1);
+
+		light.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_DARKENED);
+		obs.assertStateEquals(4);
+
+		light.signalAction(LightControllerCommandInterface.MOTION_DETECTED);
+		obs.assertStateEquals(16);
+
+		light.signalAction(LightControllerCommandInterface.LAMP_TIMER_EXPIRED);
+		obs.assertStateEquals(4);
+
+		light.signalAction(LightControllerCommandInterface.MOTION_DETECTED);
+		obs.assertStateEquals(16);
+
+		light.signalAction(LightControllerCommandInterface.SECURITY_ALARM_TRIPPED);
+		obs.assertStateEquals(32);
+
+		light.signalAction(LightControllerCommandInterface.ALARM_CLEARED);
+		obs.assertStateEquals(4);
+	}
+
 	/** An implementation of the state machine's observer interface, which allows us to
-	 * actually observe the changes in the state machine. Also provides some useful methods
-	 * to perform tests on the state. */
+	 * actually observe the changes in the state machine. Also provides some useful
+	 * methods to perform tests on the state. */
 	private static class LightStateObserver implements
 			LightControllerStateMachineObserverInterface {
 
@@ -85,9 +205,7 @@ public class SecurityLightTester {
 			for(int validState : validStates) {
 				if(state == validState) isValid = true;
 			}
-			if(!isValid) {
-				fail("The state of the observer is invalid, equals: " + state);
-			}
+			assertTrue(isValid);
 		}
 
 		/** A simple getter for the last seen state.
@@ -101,16 +219,16 @@ public class SecurityLightTester {
 			assertEquals(expectedState, state);
 		}
 	}
-	
+
 	/** An implementation of the light device interface, which is controlled by the state
 	 * machine. Provides methods to test the state of the light itself. */
 	private static class Lamp implements LightDeviceInterface {
-		
+
 		/** An enumeration of possible lamp states. */
 		public enum LampState {
 			OFF, ON, NIGHT, INVALID;
 		}
-		
+
 		/** The current lamp state, which is invalid on creation. */
 		private LampState state = LampState.INVALID;
 
@@ -128,13 +246,13 @@ public class SecurityLightTester {
 		public void turnLightOnNightimeBrightness() {
 			state = LampState.NIGHT;
 		}
-		
+
 		/** Simple getter for the Lamp's state. */
 		public LampState getState() {
 			return state;
 		}
-		
-		/** Convienience method to test the Lamp's state using a JUnit assertion.*/
+
+		/** Convienience method to test the Lamp's state using a JUnit assertion. */
 		public void assertStateEquals(LampState expected) {
 			assertEquals(expected, state);
 		}
