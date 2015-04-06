@@ -34,7 +34,8 @@ public class SecurityLightTester {
 		light.subscribe(obs);
 	}
 
-	//Let's write some tests!
+	/** A test to ensure that the state machine and its observer started correctly after
+	 * {@link #setUp()} is called. */
 	@Test
 	public void initializationTest() {
 		//The observer should get a valid state after the subscribe in setUp
@@ -60,24 +61,27 @@ public class SecurityLightTester {
 
 		/** Updates the state of the observed light, and checks that the new state is valid
 		 * using a JUnit assertion.
-		 *  @see LightControllerStateMachineObserverInterface#updateLightState(int) */
+		 * @see LightControllerStateMachineObserverInterface#updateLightState(int) */
 		@Override
 		public void updateLightState(int newState) {
 			state = newState;
 			assertValidState();
 		}
 
-		/** Check whether the current state of this observer is valid using JUnit assertions.*/
+		/** Check whether the current state of this observer is valid using JUnit
+		 * assertions. */
 		public void assertValidState() {
 			boolean isValid = false;
 			for(int validState : validStates) {
 				if(state == validState) isValid = true;
 			}
-			assertTrue(isValid);
+			if(!isValid) {
+				fail("The state of the observer is invalid, equals: " + state);
+			}
 		}
 
-		/** A simple getter for the last seen state. 
-		 * @return the last observed state*/
+		/** A simple getter for the last seen state.
+		 * @return the last observed state */
 		public int getState() {
 			return state;
 		}
