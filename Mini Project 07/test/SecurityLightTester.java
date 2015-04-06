@@ -227,12 +227,6 @@ public class SecurityLightTester {
 			}
 		}
 
-		/** A simple getter for the last seen state.
-		 * @return the last observed state */
-		public int getState() {
-			return state;
-		}
-
 		/** Convienience method for testing the last observed state with a JUnit assertion */
 		public void assertStateEquals(int expectedState) {
 			assertEquals(expectedState, state);
@@ -264,11 +258,6 @@ public class SecurityLightTester {
 		@Override
 		public void turnLightOnNightimeBrightness() {
 			state = LampState.NIGHT;
-		}
-
-		/** Simple getter for the Lamp's state. */
-		public LampState getState() {
-			return state;
 		}
 
 		/** Convienience method to test the Lamp's state using a JUnit assertion. */
