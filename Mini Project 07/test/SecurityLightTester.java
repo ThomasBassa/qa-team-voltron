@@ -28,7 +28,8 @@ public class SecurityLightTester {
 	private Lamp lamp;
 
 	/** Used to create a brand new state machine, observer, and light before executing any
-	 * test..
+	 * test. The conditions expected after this occurs are tested in
+	 * {@link #initializationTest()}.
 	 * @throws Exception if something bad happens, hopefully not */
 	@Before
 	public void setUp() throws Exception {
@@ -42,12 +43,12 @@ public class SecurityLightTester {
 	}
 
 	/** A test to ensure that the state machine and its observer started correctly after
-	 * {@link #setUp()} is called.
+	 * {@link #setUp()} is called. The state machine should be in the off + day state, and
+	 * its controlled light should be off. If this test fails, the starting state for the
+	 * other tests may not be correct.
 	 * @author Thomas Bassa */
 	@Test
 	public void initializationTest() {
-		//The observer should get a valid state after the subscribe in setUp
-		obs.assertValidState();
 		//Machine should be in LAMP_OFF_DAYLIGHT state
 		obs.assertStateEquals(LightStateObserver.LAMP_OFF_DAYLIGHT);
 		//Light should be OFF
@@ -58,7 +59,7 @@ public class SecurityLightTester {
 	/** Test to check state transition from manual off to manual on
 	 * @author Greg */
 	@Test
-	public void testManuallight() {
+	public void testManualLight() {
 		light.signalAction(LightControllerCommandInterface.MANUAL_SWITCH_ON);
 		obs.assertStateEquals(LightStateObserver.LAMP_ON_FULL_BRIGHTNESS);
 
@@ -72,8 +73,6 @@ public class SecurityLightTester {
 	 * @author Greg */
 	@Test
 	public void testManualLightToDark() {
-		obs.assertStateEquals(LightStateObserver.LAMP_OFF_DAYLIGHT);
-
 		light.signalAction(LightControllerCommandInterface.MANUAL_SWITCH_ON);
 		obs.assertStateEquals(LightStateObserver.LAMP_ON_FULL_BRIGHTNESS);
 
@@ -91,8 +90,6 @@ public class SecurityLightTester {
 	 * @author Greg */
 	@Test
 	public void testDayToNight() {
-		obs.assertStateEquals(LightStateObserver.LAMP_OFF_DAYLIGHT);
-
 		light.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_DARKENED);
 		obs.assertStateEquals(LightStateObserver.LAMP_OFF_NIGHTIME);
 
@@ -105,8 +102,6 @@ public class SecurityLightTester {
 	 * @author Greg */
 	@Test
 	public void testManualDayToNight() {
-		obs.assertStateEquals(LightStateObserver.LAMP_OFF_DAYLIGHT);
-
 		light.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_DARKENED);
 		obs.assertStateEquals(LightStateObserver.LAMP_OFF_NIGHTIME);
 
@@ -125,8 +120,6 @@ public class SecurityLightTester {
 	 * @author Greg */
 	@Test
 	public void testAlarm() {
-		obs.assertStateEquals(LightStateObserver.LAMP_OFF_DAYLIGHT);
-
 		light.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_DARKENED);
 		obs.assertStateEquals(LightStateObserver.LAMP_OFF_NIGHTIME);
 
@@ -141,7 +134,6 @@ public class SecurityLightTester {
 
 		light.signalAction(LightControllerCommandInterface.ALARM_CLEARED);
 		obs.assertStateEquals(LightStateObserver.LAMP_OFF_NIGHTIME);
-
 	}
 
 	/** Test to check state transition from day to night then motion is detected. Light
@@ -150,8 +142,6 @@ public class SecurityLightTester {
 	 * @author Greg */
 	@Test
 	public void testMotionDetected() {
-		obs.assertStateEquals(LightStateObserver.LAMP_OFF_DAYLIGHT);
-
 		light.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_DARKENED);
 		obs.assertStateEquals(LightStateObserver.LAMP_OFF_NIGHTIME);
 
