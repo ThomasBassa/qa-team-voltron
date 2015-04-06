@@ -172,6 +172,7 @@ public class LightControllerStateMachine implements
 		// We will determine it through the case statement.
 		int destinationState = presentState;
 		// This variable will indicate if a state change is necessary.
+		//TRB boolean stateChange = true; Initialized to the wrong value.
 		boolean stateChange = false;
 
 		// This switch state will determine the destination state that we need
