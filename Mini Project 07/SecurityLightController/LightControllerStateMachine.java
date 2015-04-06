@@ -172,7 +172,7 @@ public class LightControllerStateMachine implements
 		// We will determine it through the case statement.
 		int destinationState = presentState;
 		// This variable will indicate if a state change is necessary.
-		boolean stateChange = true;
+		boolean stateChange = false;
 
 		// This switch state will determine the destination state that we need
 		// to enter. Based on that, make the correct state changes.
@@ -186,7 +186,6 @@ public class LightControllerStateMachine implements
 					stateChange = true;
 				} else {
 					// No state change here.
-
 				}
 				break;
 			case LightControllerStateMachineObserverInterface.LAMP_ON_FULL_BRIGHTNESS:
@@ -198,7 +197,6 @@ public class LightControllerStateMachine implements
 					stateChange = true;
 				} else {
 					// No state change here.
-
 				}
 				break;
 
@@ -212,17 +210,12 @@ public class LightControllerStateMachine implements
 				} else if(request == LightControllerCommandInterface.SECURITY_ALARM_TRIPPED) {
 					destinationState = LightControllerStateMachineObserverInterface.INTRUSION_DETECTED;
 					stateChange = true;
-				} else if(request == LightControllerCommandInterface.LIGHT_SENSOR_LIGHTENED) { // FIXED
-																								// -
-																								// this
-																								// case
-																								// was
-																								// missing
+				} else if(request == LightControllerCommandInterface.LIGHT_SENSOR_LIGHTENED) {
+					//"FIXED - this case was missing" was present before we even started
 					destinationState = LightControllerStateMachineObserverInterface.LAMP_OFF_DAYLIGHT;
 					stateChange = true;
 				} else {
 					// No state change here.
-
 				}
 				break;
 
@@ -248,7 +241,6 @@ public class LightControllerStateMachine implements
 					stateChange = true;
 				} else {
 					// No state change here.
-
 				}
 				break;
 
@@ -286,9 +278,7 @@ public class LightControllerStateMachine implements
 
 						// Adjust the light setting.
 						light.turnLightOnFullBrightness();
-
 					}
-
 				}
 
 			default:
