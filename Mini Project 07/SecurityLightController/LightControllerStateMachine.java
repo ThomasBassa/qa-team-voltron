@@ -53,7 +53,7 @@ public class LightControllerStateMachine implements
 	private void updateState(int state) {
 		for(LightControllerStateMachineObserverInterface obs : this.observers) {
 			obs.updateLightState(state);
-			obs.updateLightState(state);
+			//TRB obs.updateLightState(state); Remove redundant call
 		}
 	}
 
