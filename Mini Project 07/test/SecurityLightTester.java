@@ -22,31 +22,41 @@ public class SecurityLightTester {
 	 * actually observe the changes in the state machine. This is an inner class found at
 	 * the end of this test suite. */
 	private LightStateObserver obs;
+	
+	/** An implementation of the light device interface, seen in an inner class at
+	 * the end of this suite. */
+	private Lamp lamp;
 
-	/** Used to create a brand new state machine and observer before executing any test.
+	/** Used to create a brand new state machine, observer, and light before executing any test..
 	 * @throws Exception if something bad happens, hopefully not */
 	@Before
 	public void setUp() throws Exception {
 		light = new LightControllerStateMachine();
-		//TODO call setLight?
-		//TODO call setTmr?
 		obs = new LightStateObserver();
+		lamp = new Lamp();
+		
+		light.setLight(lamp);
+		light.setTmr(new LightTimer(light));
 		light.subscribe(obs);
 	}
 
 	/** A test to ensure that the state machine and its observer started correctly after
-	 * {@link #setUp()} is called. */
+	 * {@link #setUp()} is called.
+	 * @author Thomas Bassa */
 	@Test
 	public void initializationTest() {
 		//The observer should get a valid state after the subscribe in setUp
 		obs.assertValidState();
-		//Light should be in LAMP_OFF_DAYLIGHT state
+		//Machine should be in LAMP_OFF_DAYLIGHT state
 		obs.assertStateEquals(LightStateObserver.LAMP_OFF_DAYLIGHT);
+		//Light should be OFF
+		lamp.assertStateEquals(Lamp.LampState.OFF);
 	}
 
 	/** An implementation of the state machine's observer interface, which allows us to
-	 * actually observe the changes in the state machine. */
-	private class LightStateObserver implements
+	 * actually observe the changes in the state machine. Also provides some useful methods
+	 * to perform tests on the state. */
+	private static class LightStateObserver implements
 			LightControllerStateMachineObserverInterface {
 
 		/** The last observed state. Initialized to an invalid value. */
@@ -89,6 +99,44 @@ public class SecurityLightTester {
 		/** Convienience method for testing the last observed state with a JUnit assertion */
 		public void assertStateEquals(int expectedState) {
 			assertEquals(expectedState, state);
+		}
+	}
+	
+	/** An implementation of the light device interface, which is controlled by the state
+	 * machine. Provides methods to test the state of the light itself. */
+	private static class Lamp implements LightDeviceInterface {
+		
+		/** An enumeration of possible lamp states. */
+		public enum LampState {
+			OFF, ON, NIGHT, INVALID;
+		}
+		
+		/** The current lamp state, which is invalid on creation. */
+		private LampState state = LampState.INVALID;
+
+		@Override
+		public void turnLightOff() {
+			state = LampState.OFF;
+		}
+
+		@Override
+		public void turnLightOnFullBrightness() {
+			state = LampState.ON;
+		}
+
+		@Override
+		public void turnLightOnNightimeBrightness() {
+			state = LampState.NIGHT;
+		}
+		
+		/** Simple getter for the Lamp's state. */
+		public LampState getState() {
+			return state;
+		}
+		
+		/** Convienience method to test the Lamp's state using a JUnit assertion.*/
+		public void assertStateEquals(LampState expected) {
+			assertEquals(expected, state);
 		}
 	}
 }
