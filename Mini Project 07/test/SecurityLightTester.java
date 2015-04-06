@@ -2,8 +2,6 @@ package test;
 
 import static org.junit.Assert.*;
 
-import javax.swing.JFrame;
-
 import org.junit.Before;
 import org.junit.Test;
 
