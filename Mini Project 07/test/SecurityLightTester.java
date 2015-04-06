@@ -203,7 +203,9 @@ public class SecurityLightTester {
 			for(int validState : validStates) {
 				if(state == validState) isValid = true;
 			}
-			assertTrue(isValid);
+			if(!isValid) {
+				fail("Invalid observed state! Equals: " + state);
+			}
 		}
 
 		/** A simple getter for the last seen state.
