@@ -227,7 +227,7 @@ public class SecurityLightTester {
 			}
 		}
 
-		/** Convienience method for testing the last observed state with a JUnit assertion */
+		/** Test the last observed state with a JUnit assertion */
 		public void assertStateEquals(int expectedState) {
 			assertEquals(expectedState, state);
 		}
@@ -239,11 +239,11 @@ public class SecurityLightTester {
 
 		/** An enumeration of possible lamp states. */
 		public enum LampState {
-			OFF, ON, NIGHT, INVALID;
+			OFF, ON, NIGHT;
 		}
 
-		/** The current lamp state, which is invalid on creation. */
-		private LampState state = LampState.INVALID;
+		/** The current lamp state, which is off on creation. */
+		private LampState state = LampState.OFF;
 
 		@Override
 		public void turnLightOff() {
@@ -260,7 +260,7 @@ public class SecurityLightTester {
 			state = LampState.NIGHT;
 		}
 
-		/** Convienience method to test the Lamp's state using a JUnit assertion. */
+		/** Test the Lamp's state using a JUnit assertion. */
 		public void assertStateEquals(LampState expected) {
 			assertEquals(expected, state);
 		}
