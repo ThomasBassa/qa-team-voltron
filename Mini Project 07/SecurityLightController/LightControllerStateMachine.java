@@ -62,7 +62,8 @@ public class LightControllerStateMachine implements
 	 * SecurityLightController.LightControllerStateMachineObserverInterface) */
 	public void subscribe(LightControllerStateMachineObserverInterface obs) {
 		this.observers.add(obs);
-
+		//TRB There was no call to update new observers with a valid state
+		obs.updateLightState(getCurrentState());
 	}
 
 	/* (non-Javadoc)
@@ -70,7 +71,6 @@ public class LightControllerStateMachine implements
 	 * SecurityLightController.LightControllerStateMachineObserverInterface) */
 	public void unsubscribe(LightControllerStateMachineObserverInterface obs) {
 		this.observers.remove(obs);
-
 	}
 
 	/** This method will process exit conditions based upon leaving a state.
