@@ -55,7 +55,21 @@ public class SecurityLightTester {
 		lamp.assertStateEquals(Lamp.LampState.OFF);
 	}
 
-
+	/** Test unsubscribe.
+	 * @author Umar Idris */
+	@Test
+	public void testUnsubscribe() {
+		light.unsubscribe(obs);
+	}
+	
+	/** Test setCurrentSate().
+	 * @author Umar Idris */
+	@Test
+	public void testSetCurrentState() {
+		light.setCurrentState(obs.state);
+	}
+	
+	
 	/** Test to check state transition from manual off to manual on
 	 * @author Greg Carkin (signals, machine state)
 	 * @author Thomas Bassa (light state)*/

@@ -316,7 +316,7 @@ public class LightControllerStateMachine implements
 	 * only be used for testing, as it may or may not properly invoke any entry or exit
 	 * conditions.
 	 * @param currentState This is the desired state for the light controller. */
-	protected void setCurrentState(int currentState) {
+	public void setCurrentState(int currentState) {
 		this.currentState = currentState;
 	}
 
