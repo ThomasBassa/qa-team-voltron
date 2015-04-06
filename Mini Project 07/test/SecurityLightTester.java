@@ -57,108 +57,137 @@ public class SecurityLightTester {
 
 
 	/** Test to check state transition from manual off to manual on
-	 * @author Greg */
+	 * @author Greg Carkin (signals, machine state)
+	 * @author Thomas Bassa (light state)*/
 	@Test
 	public void testManualLight() {
 		light.signalAction(LightControllerCommandInterface.MANUAL_SWITCH_ON);
 		obs.assertStateEquals(LightStateObserver.LAMP_ON_FULL_BRIGHTNESS);
+		lamp.assertStateEquals(Lamp.LampState.ON);
 
 		light.signalAction(LightControllerCommandInterface.MANUAL_SWITCH_OFF);
 		obs.assertStateEquals(LightStateObserver.LAMP_OFF_DAYLIGHT);
+		lamp.assertStateEquals(Lamp.LampState.OFF);
 	}
 
 
 	/** Test to check state transition from manual off to manual on to darkened back to
 	 * lightened
-	 * @author Greg */
+	 * @author Greg Carkin (signals, machine state)
+	 * @author Thomas Bassa (light state)*/
 	@Test
 	public void testManualLightToDark() {
 		light.signalAction(LightControllerCommandInterface.MANUAL_SWITCH_ON);
 		obs.assertStateEquals(LightStateObserver.LAMP_ON_FULL_BRIGHTNESS);
-
+		lamp.assertStateEquals(Lamp.LampState.ON);
+		
 		light.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_DARKENED);
 		obs.assertStateEquals(LightStateObserver.LAMP_ON_NIGHTIME_BRIGHTNESS);
-
+		lamp.assertStateEquals(Lamp.LampState.NIGHT);
+		
 		light.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_LIGHTENED);
 		obs.assertStateEquals(LightStateObserver.LAMP_ON_FULL_BRIGHTNESS);
+		lamp.assertStateEquals(Lamp.LampState.ON);
 
 		light.signalAction(LightControllerCommandInterface.MANUAL_SWITCH_OFF);
 		obs.assertStateEquals(LightStateObserver.LAMP_OFF_DAYLIGHT);
+		lamp.assertStateEquals(Lamp.LampState.OFF);
 	}
 
 	/** Test to check state transition from day to night back to day
-	 * @author Greg */
+	 * @author Greg Carkin (signals, machine state)
+	 * @author Thomas Bassa (light state)*/
 	@Test
 	public void testDayToNight() {
 		light.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_DARKENED);
 		obs.assertStateEquals(LightStateObserver.LAMP_OFF_NIGHTIME);
+		lamp.assertStateEquals(Lamp.LampState.OFF);
 
 		light.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_LIGHTENED);
 		obs.assertStateEquals(LightStateObserver.LAMP_OFF_DAYLIGHT);
+		lamp.assertStateEquals(Lamp.LampState.OFF);
 	}
 
 	/** Test to check state transition from day to night then manual on, manual off back to
 	 * day
-	 * @author Greg */
+	 * @author Greg Carkin (signals, machine state)
+	 * @author Thomas Bassa (light state)*/
 	@Test
 	public void testManualDayToNight() {
 		light.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_DARKENED);
 		obs.assertStateEquals(LightStateObserver.LAMP_OFF_NIGHTIME);
+		lamp.assertStateEquals(Lamp.LampState.OFF);
 
 		light.signalAction(LightControllerCommandInterface.MANUAL_SWITCH_ON);
 		obs.assertStateEquals(LightStateObserver.LAMP_ON_NIGHTIME_BRIGHTNESS);
+		lamp.assertStateEquals(Lamp.LampState.NIGHT);
 
 		light.signalAction(LightControllerCommandInterface.MANUAL_SWITCH_OFF);
 		obs.assertStateEquals(LightStateObserver.LAMP_OFF_NIGHTIME);
+		lamp.assertStateEquals(Lamp.LampState.OFF);
 
 		light.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_LIGHTENED);
 		obs.assertStateEquals(LightStateObserver.LAMP_OFF_DAYLIGHT);
+		lamp.assertStateEquals(Lamp.LampState.OFF);
 	}
 
 	/** Test to check state transition from day to night then alarm tripped then alarm is
 	 * cleared and goes back to night.
-	 * @author Greg */
+	 * @author Greg Carkin (signals, machine state)
+	 * @author Thomas Bassa (light state)*/
 	@Test
 	public void testAlarm() {
 		light.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_DARKENED);
 		obs.assertStateEquals(LightStateObserver.LAMP_OFF_NIGHTIME);
+		lamp.assertStateEquals(Lamp.LampState.OFF);
 
 		light.signalAction(LightControllerCommandInterface.SECURITY_ALARM_TRIPPED);
 		obs.assertStateEquals(LightStateObserver.INTRUSION_DETECTED);
+		lamp.assertStateEquals(Lamp.LampState.ON);
 
 		light.signalAction(LightControllerCommandInterface.LAMP_TIMER_EXPIRED);
 		obs.assertStateEquals(LightStateObserver.INTRUSION_DETECTED);
+		lamp.assertStateEquals(Lamp.LampState.OFF);
 
 		light.signalAction(LightControllerCommandInterface.LAMP_TIMER_EXPIRED);
 		obs.assertStateEquals(LightStateObserver.INTRUSION_DETECTED);
+		lamp.assertStateEquals(Lamp.LampState.ON);
 
 		light.signalAction(LightControllerCommandInterface.ALARM_CLEARED);
 		obs.assertStateEquals(LightStateObserver.LAMP_OFF_NIGHTIME);
+		lamp.assertStateEquals(Lamp.LampState.OFF);
 	}
 
 	/** Test to check state transition from day to night then motion is detected. Light
 	 * timer expires then motion is detected again. The security alarm is tripped then the
 	 * alarm is cleared.
-	 * @author Greg */
+	 * @author Greg Carkin (signals, machine state)
+	 * @author Thomas Bassa (light state)*/
 	@Test
 	public void testMotionDetected() {
 		light.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_DARKENED);
 		obs.assertStateEquals(LightStateObserver.LAMP_OFF_NIGHTIME);
+		lamp.assertStateEquals(Lamp.LampState.OFF);
 
 		light.signalAction(LightControllerCommandInterface.MOTION_DETECTED);
 		obs.assertStateEquals(LightStateObserver.MOTION_DETECTED);
+		lamp.assertStateEquals(Lamp.LampState.ON);
 
 		light.signalAction(LightControllerCommandInterface.LAMP_TIMER_EXPIRED);
 		obs.assertStateEquals(LightStateObserver.LAMP_OFF_NIGHTIME);
+		lamp.assertStateEquals(Lamp.LampState.OFF);
 
 		light.signalAction(LightControllerCommandInterface.MOTION_DETECTED);
 		obs.assertStateEquals(LightStateObserver.MOTION_DETECTED);
+		lamp.assertStateEquals(Lamp.LampState.ON);
 
 		light.signalAction(LightControllerCommandInterface.SECURITY_ALARM_TRIPPED);
 		obs.assertStateEquals(LightStateObserver.INTRUSION_DETECTED);
+		lamp.assertStateEquals(Lamp.LampState.ON);
 
 		light.signalAction(LightControllerCommandInterface.ALARM_CLEARED);
 		obs.assertStateEquals(LightStateObserver.LAMP_OFF_NIGHTIME);
+		lamp.assertStateEquals(Lamp.LampState.OFF);
 	}
 
 	/** An implementation of the state machine's observer interface, which allows us to
