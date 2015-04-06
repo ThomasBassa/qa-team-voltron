@@ -130,9 +130,18 @@ public class LightControllerStateMachine implements
 				break;
 
 			case LightControllerStateMachineObserverInterface.MOTION_DETECTED:
-				tmr.startTimer(5);
+				/*tmr.startTimer(5);
 				light.turnLightOnFullBrightness();
 				//break;
+				
+				bug with tmr.startTime(5), should be 30
+				bug with commented out break
+				GMC*/
+				tmr.startTimer(30);
+				light.turnLightOnFullBrightness();
+				break;
+				
+				
 
 			case LightControllerStateMachineObserverInterface.INTRUSION_DETECTED:
 				// Initialize the substate appropriately.
