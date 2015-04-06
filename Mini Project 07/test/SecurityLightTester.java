@@ -2,10 +2,13 @@ package test;
 
 import static org.junit.Assert.*;
 
+import javax.swing.JFrame;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import SecurityLightController.*;
+import UI.SecurityLampSimulatedUI;
 
 
 /** A test suite for the security light logic.
@@ -32,16 +35,159 @@ public class SecurityLightTester {
 		//TODO call setTmr?
 		obs = new LightStateObserver();
 		light.subscribe(obs);
+		
+		JFrame frame = new JFrame("Security Light Controller GUI");
+		SecurityLampSimulatedUI cwrb1 = new SecurityLampSimulatedUI(light);
+		frame.setContentPane(cwrb1);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		frame.setBounds(300, 0, 20, 10);
+		frame.pack();
+		frame.setVisible(true);
+
+		light.setLight(cwrb1);
+		light.setTmr(new LightTimer(light));
 	}
 
-	/** A test to ensure that the state machine and its observer started correctly after
-	 * {@link #setUp()} is called. */
+	//Let's write some tests!
 	@Test
 	public void initializationTest() {
 		//The observer should get a valid state after the subscribe in setUp
 		obs.assertValidState();
 		//Light should be in LAMP_OFF_DAYLIGHT state
 		obs.assertStateEquals(LightStateObserver.LAMP_OFF_DAYLIGHT);
+	}
+	
+	
+	/**
+	 * Test to check state transition from manual off to manual on
+	 * @author Greg
+	 */
+	@Test
+	public void testManuallight() {
+		light.signalAction(LightControllerCommandInterface.MANUAL_SWITCH_ON);
+		assertEquals(light.getCurrentState(), 2, 0);
+		
+		light.signalAction(LightControllerCommandInterface.MANUAL_SWITCH_OFF);
+		assertEquals(light.getCurrentState(), 1, 0);
+	}
+	
+	
+	/**
+	 * Test to check state transition from manual off to manual on
+	 * to darkened back to lightened
+	 * @author Greg
+	 */
+	@Test
+	public void testManualLightToDark() {
+		assertEquals(light.getCurrentState(), 1, 0);
+		
+		light.signalAction(LightControllerCommandInterface.MANUAL_SWITCH_ON);
+		assertEquals(light.getCurrentState(), 2, 0);
+		
+		light.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_DARKENED);
+		assertEquals(light.getCurrentState(), 8, 0);
+		
+		light.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_LIGHTENED);
+		assertEquals(light.getCurrentState(), 2, 0);
+		
+		light.signalAction(LightControllerCommandInterface.MANUAL_SWITCH_OFF);
+		assertEquals(light.getCurrentState(), 1, 0);
+	}
+	
+	/**
+	 * Test to check state transition from day to night back to 
+	 * day
+	 * @author Greg
+	 */
+	@Test
+	public void testDayToNight() {
+		assertEquals(light.getCurrentState(), 1, 0);
+		
+		light.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_DARKENED);
+		assertEquals(light.getCurrentState(), 4, 0);
+		
+		light.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_LIGHTENED);
+		assertEquals(light.getCurrentState(), 1, 0);
+	}
+	
+	/**
+	 * Test to check state transition from day to night then manual 
+	 * on, manual off back to day
+	 * @author Greg
+	 */
+	@Test
+	public void testManualDayToNight() {
+		assertEquals(light.getCurrentState(), 1, 0);
+		
+		light.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_DARKENED);
+		assertEquals(light.getCurrentState(), 4, 0);
+		
+		light.signalAction(LightControllerCommandInterface.MANUAL_SWITCH_ON);
+		assertEquals(light.getCurrentState(), 8, 0);
+		
+		light.signalAction(LightControllerCommandInterface.MANUAL_SWITCH_OFF);
+		assertEquals(light.getCurrentState(), 4, 0);
+		
+		light.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_LIGHTENED);
+		assertEquals(light.getCurrentState(), 1, 0);
+	}
+	
+	/**
+	 * Test to check state transition from day to night then alarm tripped
+	 * then alarm is cleared and goes back to night.
+	 * @author Greg
+	 */
+	@Test
+	public void testAlarm() {
+		assertEquals(light.getCurrentState(), 1, 0);
+		
+		light.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_DARKENED);
+		assertEquals(light.getCurrentState(), 4, 0);
+		
+		light.signalAction(LightControllerCommandInterface.SECURITY_ALARM_TRIPPED);
+		assertEquals(light.getCurrentState(), 32, 0);
+		
+		light.signalAction(LightControllerCommandInterface.LAMP_TIMER_EXPIRED);
+		assertEquals(light.getCurrentState(), 32, 0);
+		
+		light.signalAction(LightControllerCommandInterface.LAMP_TIMER_EXPIRED);
+		assertEquals(light.getCurrentState(), 32, 0);
+		
+		light.signalAction(LightControllerCommandInterface.ALARM_CLEARED);
+		assertEquals(light.getCurrentState(), 4, 0);
+		
+	}
+	
+	/**
+	 * Test to check state transition from day to night then motion is detected.
+	 * Light timer expires then motion is detected again. The security alarm is tripped
+	 * then the alarm is cleared.
+	 * @author Greg
+	 */
+	@Test
+	public void testMotionDetected() {
+		assertEquals(light.getCurrentState(), 1, 0);
+		
+		light.signalAction(LightControllerCommandInterface.LIGHT_SENSOR_DARKENED);
+		assertEquals(light.getCurrentState(), 4, 0);
+		
+		light.signalAction(LightControllerCommandInterface.MOTION_DETECTED);
+		assertEquals(light.getCurrentState(), 16, 0);
+		
+		light.signalAction(LightControllerCommandInterface.LAMP_TIMER_EXPIRED);
+		assertEquals(light.getCurrentState(), 4, 0);
+		
+		light.signalAction(LightControllerCommandInterface.MOTION_DETECTED);
+		assertEquals(light.getCurrentState(), 16, 0);
+		
+		light.signalAction(LightControllerCommandInterface.SECURITY_ALARM_TRIPPED);
+		assertEquals(light.getCurrentState(), 32, 0);
+		
+		light.signalAction(LightControllerCommandInterface.ALARM_CLEARED);
+		assertEquals(light.getCurrentState(), 4, 0);
+
+		
 	}
 
 	/** An implementation of the state machine's observer interface, which allows us to
@@ -61,27 +207,24 @@ public class SecurityLightTester {
 
 		/** Updates the state of the observed light, and checks that the new state is valid
 		 * using a JUnit assertion.
-		 * @see LightControllerStateMachineObserverInterface#updateLightState(int) */
+		 *  @see LightControllerStateMachineObserverInterface#updateLightState(int) */
 		@Override
 		public void updateLightState(int newState) {
 			state = newState;
 			assertValidState();
 		}
 
-		/** Check whether the current state of this observer is valid using JUnit
-		 * assertions. */
+		/** Check whether the current state of this observer is valid using JUnit assertions.*/
 		public void assertValidState() {
 			boolean isValid = false;
 			for(int validState : validStates) {
 				if(state == validState) isValid = true;
 			}
-			if(!isValid) {
-				fail("The state of the observer is invalid, equals: " + state);
-			}
+			assertTrue(isValid);
 		}
 
-		/** A simple getter for the last seen state.
-		 * @return the last observed state */
+		/** A simple getter for the last seen state. 
+		 * @return the last observed state*/
 		public int getState() {
 			return state;
 		}
