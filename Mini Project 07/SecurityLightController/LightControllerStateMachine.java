@@ -137,6 +137,7 @@ public class LightControllerStateMachine implements
 				bug with tmr.startTime(5), should be 30
 				bug with commented out break
 				GMC*/
+				
 				tmr.startTimer(30);
 				light.turnLightOnFullBrightness();
 				break;
